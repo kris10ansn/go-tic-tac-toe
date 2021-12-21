@@ -9,7 +9,7 @@ const BOARD_WIDTH byte = 3
 const BOARD_HEIGHT byte = 3
 
 type Tic = byte
-type Board = [3][3]Tic
+type Board = [BOARD_HEIGHT][BOARD_WIDTH]Tic
 
 func CreateEmptyBoard() Board {
 	return Board{
