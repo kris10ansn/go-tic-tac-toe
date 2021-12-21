@@ -76,13 +76,16 @@ func NextTurn(turn *Tic) error {
 }
 
 func BoardToString(board Board) string {
+	var i byte
 	str := ""
 
-	for _, row := range board {
-		for _, val := range row {
+	for i = 0; i < BOARD_HEIGHT; i++ {
+		for _, val := range board[i] {
 			str += fmt.Sprintf("[%c]", val)
 		}
-		str += "\n"
+		if i != BOARD_HEIGHT-1 {
+			str += "\n"
+		}
 	}
 
 	return str
