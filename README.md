@@ -4,5 +4,5 @@ This is a personal project for learning golang, I decided to make a tic-tac-toe 
 
 ## Todo
 
-[ ] finish game back end
-[ ] make web back/front-end
+- [ ] finish game back end
+- [ ] make web back/front-end
