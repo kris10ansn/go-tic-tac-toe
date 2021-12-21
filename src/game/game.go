@@ -74,3 +74,16 @@ func NextTurn(turn *Tic) error {
 		}
 	}
 }
+
+func BoardToString(board Board) string {
+	str := ""
+
+	for _, row := range board {
+		for _, val := range row {
+			str += fmt.Sprintf("[%c]", val)
+		}
+		str += "\n"
+	}
+
+	return str
+}
