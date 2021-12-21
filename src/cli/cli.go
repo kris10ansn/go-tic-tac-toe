@@ -14,12 +14,7 @@ func InputByte(message string, input *byte) error {
 }
 
 func PrintBoard(board game.Board) {
-	for _, row := range board {
-		for _, val := range row {
-			fmt.Printf("[%c]", val)
-		}
-		fmt.Println()
-	}
+	fmt.Println(game.BoardToString(board))
 }
 
 func InputCoordinates(gameBoard game.Board) (byte, byte, error) {
