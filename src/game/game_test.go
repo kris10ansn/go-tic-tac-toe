@@ -25,7 +25,7 @@ func TestTableCheckWin(t *testing.T) {
 		{Board{empty_row, horizontal_o_row, empty_row}, O_TIC},
 		{Board{empty_row, empty_row, horizontal_o_row}, O_TIC},
 
-		// TODO: vertical tests, diagonal tests
+		// TODO: vertical tests, diagonal tests, generated tests?
 	}
 
 	for _, test := range tests {
