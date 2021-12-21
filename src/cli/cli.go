@@ -50,7 +50,7 @@ func InputCoordinates(gameBoard game.Board) (byte, byte, error) {
 	return x, y, nil
 }
 
-func InputMove(gameBoard game.Board) (byte, byte) {
+func WaitForMove(gameBoard game.Board) (byte, byte) {
 	var x byte
 	var y byte
 	var err error

@@ -17,7 +17,7 @@ func main() {
 	for ; moves < 9; moves++ {
 		fmt.Printf("%c's turn\n", turn)
 
-		x, y := cli.InputMove(gameBoard)
+		x, y := cli.WaitForMove(gameBoard)
 
 		gameBoard[y][x] = turn
 
