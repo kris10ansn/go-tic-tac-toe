@@ -19,6 +19,42 @@ func CreateEmptyBoard() Board {
 	}
 }
 
+// TODO: search diagonals
+func CheckWin(board Board) Tic {
+	var vertical byte
+	var horizontal byte
+
+	for i, row := range board {
+		for j, val := range row {
+			if j == 0 {
+				vertical = val
+				horizontal = val
+			}
+
+			if board[i][j] != horizontal {
+				horizontal = 0
+			}
+
+			if board[j][i] != vertical {
+				vertical = 0
+			}
+
+			if vertical == 0 && horizontal == 0 {
+				break
+			}
+		}
+
+		if vertical != 0 {
+			return vertical
+		} else if horizontal != 0 {
+			return horizontal
+		}
+
+	}
+
+	return EMPTY_TIC
+}
+
 func NextTurn(turn *Tic) error {
 
 	switch *turn {
