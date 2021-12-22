@@ -3,9 +3,9 @@ package game
 import "fmt"
 
 /*
-	CheckWin depends on X_TIC and O_TIC being prime numbers, so that
-	only a combination of three X's or O's can result in the sum of
-	that line being three times the value of that tic.
+	CheckWin depends on X_TIC and O_TIC being prime numbers, so that only
+	a combination of three X's or O's can result in the sum of that line
+	being three times the value of that tic.
 */
 const (
 	X_TIC     Tic = 11
