@@ -16,7 +16,7 @@ func main() {
 	cli.PrintBoard(gameBoard)
 
 	for ; winner == game.EMPTY_TIC && moves < 9; moves++ {
-		fmt.Printf("%c's turn\n", turn)
+		fmt.Printf("%s's turn\n", game.TicToString(turn))
 
 		x, y := cli.WaitForMove(gameBoard)
 
@@ -28,7 +28,7 @@ func main() {
 	}
 
 	if winner != game.EMPTY_TIC {
-		fmt.Printf("%c won the game!\n", winner)
+		fmt.Printf("%s won the game!\n", game.TicToString(winner))
 	} else if moves == 9 {
 		fmt.Println("It's a draw!")
 	} else {

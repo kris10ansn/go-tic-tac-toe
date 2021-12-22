@@ -73,7 +73,7 @@ func NextTurn(turn *Tic) error {
 		}
 	default:
 		{
-			return fmt.Errorf("invalid turn: %c", *turn)
+			return fmt.Errorf("invalid turn: %s", TicToString(*turn))
 		}
 	}
 }
@@ -84,7 +84,7 @@ func BoardToString(board Board) string {
 
 	for i = 0; i < BOARD_HEIGHT; i++ {
 		for _, val := range board[i] {
-			str += fmt.Sprintf("[%c]", val)
+			str += fmt.Sprintf("[%s]", TicToString(val))
 		}
 		if i != BOARD_HEIGHT-1 {
 			str += "\n"

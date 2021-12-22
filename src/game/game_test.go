@@ -49,10 +49,10 @@ func TestTableCheckWin(t *testing.T) {
 	for _, test := range tests {
 		if output := CheckWin(test.input); output != test.expected {
 			t.Errorf(
-				"\nTest Failed: \n%s inputted, \n%c expected, \n%c recieved",
+				"\nTest Failed: \n%s inputted, \n%s expected, \n%s recieved",
 				BoardToString(test.input),
-				test.expected,
-				output,
+				TicToString(test.expected),
+				TicToString(output),
 			)
 		}
 	}
