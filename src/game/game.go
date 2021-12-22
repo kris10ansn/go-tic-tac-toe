@@ -2,11 +2,21 @@ package game
 
 import "fmt"
 
-const EMPTY_TIC Tic = 0
-const X_TIC Tic = 11
-const O_TIC Tic = 13
-const BOARD_WIDTH byte = 3
-const BOARD_HEIGHT byte = 3
+/*
+	CheckWin depends on X_TIC and O_TIC being prime numbers, so that
+	only a combination of three X's or O's can result in the sum of
+	that line being three times the value of that tic.
+*/
+const (
+	X_TIC     Tic = 11
+	O_TIC     Tic = 13
+	EMPTY_TIC Tic = 0
+)
+
+const (
+	BOARD_WIDTH  byte = 3
+	BOARD_HEIGHT byte = 3
+)
 
 type Tic = byte
 type Board = [BOARD_HEIGHT][BOARD_WIDTH]Tic
