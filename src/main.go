@@ -21,9 +21,9 @@ func main() {
 		x, y := cli.WaitForMove(gameBoard)
 
 		game.SetBoardCoordinate(gameBoard, x, y, turn)
-		winner = game.CheckWin(gameBoard)
-
 		cli.PrintBoard(gameBoard)
+
+		winner = game.CheckWin(gameBoard)
 		game.NextTurn(&turn)
 	}
 
