@@ -44,6 +44,9 @@ func TestTableCheckWin(t *testing.T) {
 		// Diagonal o boards
 		{Board{{O_TIC, EMPTY_TIC, EMPTY_TIC}, {EMPTY_TIC, O_TIC, EMPTY_TIC}, {EMPTY_TIC, EMPTY_TIC, O_TIC}}, O_TIC},
 		{Board{{EMPTY_TIC, EMPTY_TIC, O_TIC}, {EMPTY_TIC, O_TIC, EMPTY_TIC}, {O_TIC, EMPTY_TIC, EMPTY_TIC}}, O_TIC},
+
+		// No winner boards
+		{Board{empty_row, empty_row, {EMPTY_TIC, O_TIC, X_TIC}}, EMPTY_TIC},
 	}
 
 	for _, test := range tests {
