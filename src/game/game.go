@@ -19,37 +19,40 @@ func CreateEmptyBoard() Board {
 	}
 }
 
-// TODO: search diagonals
 func CheckWin(board Board) Tic {
+	const X_WIN = 3 * (X_TIC - 100)
+	const O_WIN = 3 * (O_TIC - 100)
+
 	var vertical byte
 	var horizontal byte
+	var diagonal1 byte
+	var diagonal2 byte
 
 	for i, row := range board {
-		for j, val := range row {
-			if j == 0 {
-				vertical = val
-				horizontal = val
-			}
+		vertical = 0
+		horizontal = 0
 
-			if board[i][j] != horizontal {
-				horizontal = 0
-			}
+		diagonal1 += board[i][i] - 100
+		diagonal2 += board[i][2-i] - 100
 
-			if board[j][i] != vertical {
-				vertical = 0
-			}
-
-			if vertical == 0 && horizontal == 0 {
-				break
-			}
+		for j := range row {
+			horizontal += board[i][j] - 100
+			vertical += board[j][i] - 100
 		}
 
-		if vertical != 0 {
-			return vertical
-		} else if horizontal != 0 {
-			return horizontal
+		if vertical == X_WIN || vertical == O_WIN {
+			return vertical/3 + 100
 		}
+		if horizontal == X_WIN || horizontal == O_WIN {
+			return horizontal/3 + 100
+		}
+	}
 
+	if diagonal1 == X_WIN || diagonal1 == O_WIN {
+		return diagonal1/3 + 100
+	}
+	if diagonal2 == X_WIN || diagonal2 == O_WIN {
+		return diagonal2/3 + 100
 	}
 
 	return EMPTY_TIC
