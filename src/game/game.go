@@ -93,3 +93,14 @@ func BoardToString(board Board) string {
 
 	return str
 }
+
+func TicToString(tic Tic) string {
+	switch tic {
+	case X_TIC:
+		return "x"
+	case O_TIC:
+		return "o"
+	default:
+		return " "
+	}
+}
