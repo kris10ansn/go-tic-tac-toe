@@ -17,6 +17,16 @@ func PrintBoard(board game.Board) {
 	fmt.Println(game.BoardToString(board))
 }
 
+func PrintGameEnd(board game.Board, winner game.Tic, moves byte) {
+	if winner != game.EMPTY_TIC {
+		fmt.Printf("%s won the game after %d moves!\n", game.TicToString(winner), moves)
+	} else if moves == 9 {
+		fmt.Println("It's a draw!")
+	} else {
+		panic("Unexpected behaviour")
+	}
+}
+
 func InputCoordinates(gameBoard game.Board) (byte, byte, error) {
 	var err error = nil
 

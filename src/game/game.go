@@ -24,6 +24,10 @@ func CreateEmptyBoard() Board {
 	}
 }
 
+func SetBoardCoordinate(board Board, x byte, y byte, tic Tic) {
+	board[y][x] = tic
+}
+
 func CheckWin(board Board) Tic {
 	const X_WIN = 3 * X_TIC
 	const O_WIN = 3 * O_TIC

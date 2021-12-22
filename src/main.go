@@ -20,18 +20,12 @@ func main() {
 
 		x, y := cli.WaitForMove(gameBoard)
 
-		gameBoard[y][x] = turn
+		game.SetBoardCoordinate(gameBoard, x, y, turn)
 		winner = game.CheckWin(gameBoard)
 
 		cli.PrintBoard(gameBoard)
 		game.NextTurn(&turn)
 	}
 
-	if winner != game.EMPTY_TIC {
-		fmt.Printf("%s won the game!\n", game.TicToString(winner))
-	} else if moves == 9 {
-		fmt.Println("It's a draw!")
-	} else {
-		panic("Unexpected behaviour")
-	}
+	cli.PrintGameEnd(gameBoard, winner, moves)
 }
