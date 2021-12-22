@@ -13,8 +13,10 @@ const (
 	EMPTY_TIC Tic = 0
 )
 
-type Tic = byte
-type Board = [3][3]Tic
+type (
+	Tic   = byte
+	Board = [3][3]Tic
+)
 
 func CreateEmptyBoard() Board {
 	return Board{
