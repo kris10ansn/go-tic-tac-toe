@@ -20,7 +20,7 @@ func main() {
 
 		x, y := cli.WaitForMove(gameBoard)
 
-		game.SetBoardCoordinate(gameBoard, x, y, turn)
+		game.SetBoardCoordinate(&gameBoard, x, y, turn)
 		cli.PrintBoard(gameBoard)
 
 		winner = game.CheckWin(gameBoard)

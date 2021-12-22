@@ -24,7 +24,7 @@ func CreateEmptyBoard() Board {
 	}
 }
 
-func SetBoardCoordinate(board Board, x byte, y byte, tic Tic) {
+func SetBoardCoordinate(board *Board, x byte, y byte, tic Tic) {
 	board[y][x] = tic
 }
 
