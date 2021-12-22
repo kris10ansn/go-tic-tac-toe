@@ -16,6 +16,87 @@ type CheckWinTest struct {
 	expected Tic
 }
 
+func TestBoardToString(t *testing.T) {
+	board := CreateEmptyBoard()
+	board_string := BoardToString(board)
+	board_string_expected := "[ ][ ][ ]\n[ ][ ][ ]\n[ ][ ][ ]"
+
+	if board_string != board_string_expected {
+		t.Errorf(
+			"Test failed: empty board inputted, \n\"%s\" expected, \n\"%s\" recieved",
+			board_string_expected,
+			board_string,
+		)
+	}
+}
+
+func TestTableTicToString(t *testing.T) {
+	var tests = []struct {
+		input    Tic
+		expected string
+	}{
+		{X_TIC, "x"},
+		{O_TIC, "o"},
+		{EMPTY_TIC, " "},
+	}
+
+	for i, test := range tests {
+		if output := TicToString(test.input); output != test.expected {
+			t.Errorf(
+				"Test %d failed: %d inputted, \"%s\" expected, \"%s\" recieved",
+				i,
+				test.input,
+				test.expected,
+				output,
+			)
+		}
+	}
+}
+
+func TestTableNextTurn(t *testing.T) {
+	var prevTic Tic = X_TIC
+	var tic Tic = prevTic
+	var expected Tic = O_TIC
+
+	err := NextTurn(&tic)
+
+	if tic != expected {
+		t.Errorf(
+			"Test 0 failed: %s => NextTurn => %s, expected %s",
+			TicToString(prevTic),
+			TicToString(tic),
+			TicToString(expected),
+		)
+	}
+
+	if err != nil {
+		t.Errorf("Test 0 error: %s", err)
+	}
+
+	err = NextTurn(&tic)
+	expected = X_TIC
+
+	if tic != expected {
+		t.Errorf(
+			"Test 1 failed: %s => NextTurn => %s, expected %s",
+			TicToString(prevTic),
+			TicToString(tic),
+			TicToString(expected),
+		)
+	}
+
+	if err != nil {
+		t.Errorf("Test 1 error: %s", err)
+	}
+
+	var emptyTic Tic = EMPTY_TIC
+	err = NextTurn(&emptyTic)
+
+	if err == nil {
+		t.Error("Test 2 failed: Should have errored, no error recieved (NextTurn(EMPTY_TIC))")
+	}
+}
+
 func TestTableCheckWin(t *testing.T) {
 	var tests = []CheckWinTest{
 		// Horizontal x boards
@@ -55,10 +136,11 @@ func TestTableCheckWin(t *testing.T) {
 		{Board{empty_row, {X_TIC, EMPTY_TIC, X_TIC}, empty_row}, EMPTY_TIC},
 	}
 
-	for _, test := range tests {
+	for i, test := range tests {
 		if output := CheckWin(test.input); output != test.expected {
 			t.Errorf(
-				"\nTest Failed: \n%s inputted, \n%s/%d expected, \n%s/%d recieved",
+				"\nTest %d failed: \n%s inputted, \n%s/%d expected, \n%s/%d recieved",
+				i,
 				BoardToString(test.input),
 				TicToString(test.expected),
 				test.expected,
