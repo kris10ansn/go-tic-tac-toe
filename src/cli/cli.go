@@ -34,7 +34,7 @@ func InputCoordinates(gameBoard game.Board) (byte, byte, error) {
 		return 0, 0, err
 	}
 
-	if x >= game.BOARD_WIDTH || y >= game.BOARD_HEIGHT {
+	if x > 2 || y > 2 {
 		return x, y, fmt.Errorf("[%d, %d] coordinates out of bounds", x, y)
 	}
 

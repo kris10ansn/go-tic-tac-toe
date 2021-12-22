@@ -4,7 +4,7 @@ import (
 	"testing"
 )
 
-type Row = [BOARD_WIDTH]Tic
+type Row = [3]Tic
 
 var tics = [2]Tic{X_TIC, O_TIC}
 var empty_row = Row{EMPTY_TIC, EMPTY_TIC, EMPTY_TIC}

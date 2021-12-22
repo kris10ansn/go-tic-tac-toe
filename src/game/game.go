@@ -13,13 +13,8 @@ const (
 	EMPTY_TIC Tic = 0
 )
 
-const (
-	BOARD_WIDTH  byte = 3
-	BOARD_HEIGHT byte = 3
-)
-
 type Tic = byte
-type Board = [BOARD_HEIGHT][BOARD_WIDTH]Tic
+type Board = [3][3]Tic
 
 func CreateEmptyBoard() Board {
 	return Board{
@@ -91,11 +86,11 @@ func BoardToString(board Board) string {
 	var i byte
 	str := ""
 
-	for i = 0; i < BOARD_HEIGHT; i++ {
+	for i = 0; i < 3; i++ {
 		for _, val := range board[i] {
 			str += fmt.Sprintf("[%s]", TicToString(val))
 		}
-		if i != BOARD_HEIGHT-1 {
+		if i != 3-1 {
 			str += "\n"
 		}
 	}
