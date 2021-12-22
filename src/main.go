@@ -8,11 +8,13 @@ import (
 )
 
 func main() {
-	var winner game.Tic = game.EMPTY_TIC
-	var turn game.Tic = game.X_TIC
-	var moves byte = 0
+	var (
+		gameBoard game.Board = game.CreateEmptyBoard()
+		winner    game.Tic   = game.EMPTY_TIC
+		turn      game.Tic   = game.X_TIC
+		moves     byte       = 0
+	)
 
-	gameBoard := game.CreateEmptyBoard()
 	cli.PrintBoard(gameBoard)
 
 	for ; winner == game.EMPTY_TIC && moves < 9; moves++ {
