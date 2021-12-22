@@ -3,8 +3,8 @@ package game
 import "fmt"
 
 const EMPTY_TIC Tic = 0
-const X_TIC Tic = 1
-const O_TIC Tic = 2
+const X_TIC Tic = 11
+const O_TIC Tic = 13
 const BOARD_WIDTH byte = 3
 const BOARD_HEIGHT byte = 3
 
