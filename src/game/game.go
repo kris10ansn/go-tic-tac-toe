@@ -69,7 +69,6 @@ func CheckWin(board Board) Tic {
 }
 
 func NextTurn(turn *Tic) error {
-
 	switch *turn {
 	case X_TIC:
 		{
