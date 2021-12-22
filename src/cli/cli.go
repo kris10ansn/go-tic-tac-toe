@@ -21,14 +21,14 @@ func InputCoordinates(gameBoard game.Board) (byte, byte, error) {
 	var err error = nil
 
 	var y byte
-	err = InputByte("Row number:", &y)
+	err = InputByte("Row number (0-2):", &y)
 
 	if err != nil {
 		return 0, 0, err
 	}
 
 	var x byte
-	err = InputByte("Column number: ", &x)
+	err = InputByte("Column number (0-2): ", &x)
 
 	if err != nil {
 		return 0, 0, err
