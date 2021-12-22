@@ -2,9 +2,9 @@ package game
 
 import "fmt"
 
-const EMPTY_TIC Tic = ' '
-const X_TIC Tic = 'x'
-const O_TIC Tic = 'o'
+const EMPTY_TIC Tic = 0
+const X_TIC Tic = 1
+const O_TIC Tic = 2
 const BOARD_WIDTH byte = 3
 const BOARD_HEIGHT byte = 3
 
@@ -20,8 +20,8 @@ func CreateEmptyBoard() Board {
 }
 
 func CheckWin(board Board) Tic {
-	const X_WIN = 3 * (X_TIC - 100)
-	const O_WIN = 3 * (O_TIC - 100)
+	const X_WIN = 3 * X_TIC
+	const O_WIN = 3 * O_TIC
 
 	var vertical byte
 	var horizontal byte
@@ -32,27 +32,27 @@ func CheckWin(board Board) Tic {
 		vertical = 0
 		horizontal = 0
 
-		diagonal1 += board[i][i] - 100
-		diagonal2 += board[i][2-i] - 100
+		diagonal1 += board[i][i]
+		diagonal2 += board[i][2-i]
 
 		for j := range row {
-			horizontal += board[i][j] - 100
-			vertical += board[j][i] - 100
+			horizontal += board[i][j]
+			vertical += board[j][i]
 		}
 
 		if vertical == X_WIN || vertical == O_WIN {
-			return vertical/3 + 100
+			return vertical / 3
 		}
 		if horizontal == X_WIN || horizontal == O_WIN {
-			return horizontal/3 + 100
+			return horizontal / 3
 		}
 	}
 
 	if diagonal1 == X_WIN || diagonal1 == O_WIN {
-		return diagonal1/3 + 100
+		return diagonal1 / 3
 	}
 	if diagonal2 == X_WIN || diagonal2 == O_WIN {
-		return diagonal2/3 + 100
+		return diagonal2 / 3
 	}
 
 	return EMPTY_TIC
