@@ -45,8 +45,14 @@ func TestTableCheckWin(t *testing.T) {
 		{Board{{O_TIC, EMPTY_TIC, EMPTY_TIC}, {EMPTY_TIC, O_TIC, EMPTY_TIC}, {EMPTY_TIC, EMPTY_TIC, O_TIC}}, O_TIC},
 		{Board{{EMPTY_TIC, EMPTY_TIC, O_TIC}, {EMPTY_TIC, O_TIC, EMPTY_TIC}, {O_TIC, EMPTY_TIC, EMPTY_TIC}}, O_TIC},
 
-		// No winner boards
+		// Non-winning board that could break CheckWin if X_TIC and O_TIC are not prime
 		{Board{empty_row, empty_row, {EMPTY_TIC, O_TIC, X_TIC}}, EMPTY_TIC},
+
+		// Randomly thought of no winner boards
+		{Board{{O_TIC, X_TIC, O_TIC}, {X_TIC, O_TIC, X_TIC}, {X_TIC, O_TIC, X_TIC}}, EMPTY_TIC},
+		{Board{{EMPTY_TIC, X_TIC, O_TIC}, {X_TIC, EMPTY_TIC, X_TIC}, {X_TIC, O_TIC, X_TIC}}, EMPTY_TIC},
+		{Board{{EMPTY_TIC, X_TIC, O_TIC}, {X_TIC, EMPTY_TIC, X_TIC}, empty_row}, EMPTY_TIC},
+		{Board{empty_row, {X_TIC, EMPTY_TIC, X_TIC}, empty_row}, EMPTY_TIC},
 	}
 
 	for _, test := range tests {
