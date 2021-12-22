@@ -4,17 +4,20 @@ import (
 	"testing"
 )
 
-type Row = [3]Tic
+var (
+	tics             = [2]Tic{X_TIC, O_TIC}
+	empty_row        = Row{EMPTY_TIC, EMPTY_TIC, EMPTY_TIC}
+	horizontal_x_row = Row{X_TIC, X_TIC, X_TIC}
+	horizontal_o_row = Row{O_TIC, O_TIC, O_TIC}
+)
 
-var tics = [2]Tic{X_TIC, O_TIC}
-var empty_row = Row{EMPTY_TIC, EMPTY_TIC, EMPTY_TIC}
-var horizontal_x_row = Row{X_TIC, X_TIC, X_TIC}
-var horizontal_o_row = Row{O_TIC, O_TIC, O_TIC}
-
-type CheckWinTest struct {
-	input    Board
-	expected Tic
-}
+type (
+	CheckWinTest = struct {
+		input    Board
+		expected Tic
+	}
+	Row = [3]Tic
+)
 
 func TestBoardToString(t *testing.T) {
 	board := CreateEmptyBoard()
