@@ -31,7 +31,7 @@ func PrintGameEnd(board game.Board, winner game.Tic, moves byte) {
 	}
 }
 
-func InputCoordinates(gameBoard game.Board) (byte, byte, error) {
+func InputCoordinates(board game.Board) (byte, byte, error) {
 	var err error = nil
 
 	var y byte
@@ -52,21 +52,21 @@ func InputCoordinates(gameBoard game.Board) (byte, byte, error) {
 		return x, y, fmt.Errorf("[%d, %d] coordinates out of bounds", x, y)
 	}
 
-	if gameBoard[y][x] != game.EMPTY_TIC {
+	if board[y][x] != game.EMPTY_TIC {
 		return x, y, fmt.Errorf("[%d, %d] is already occupied", x, y)
 	}
 
 	return x, y, nil
 }
 
-func WaitForMove(gameBoard game.Board) (byte, byte) {
+func WaitForMove(board game.Board) (byte, byte) {
 	var x byte
 	var y byte
 	var err error
 
-	for x, y, err = InputCoordinates(gameBoard); err != nil; {
+	for x, y, err = InputCoordinates(board); err != nil; {
 		fmt.Printf("%s\n", err)
-		x, y, err = InputCoordinates(gameBoard)
+		x, y, err = InputCoordinates(board)
 	}
 
 	return x, y
