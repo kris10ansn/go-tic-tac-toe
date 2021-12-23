@@ -1,8 +1,6 @@
 package main
 
 import (
-	"fmt"
-
 	"github.com/kris10ansn/go-tic-tac-toe/src/cli"
 	"github.com/kris10ansn/go-tic-tac-toe/src/game"
 )
@@ -18,7 +16,7 @@ func main() {
 	cli.PrintBoard(gameBoard)
 
 	for ; winner == game.EMPTY_TIC && moves < 9; moves++ {
-		fmt.Printf("%s's turn\n", game.TicToString(turn))
+		cli.PrintTurn(turn)
 
 		x, y := cli.WaitForMove(gameBoard)
 

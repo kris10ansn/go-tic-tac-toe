@@ -17,6 +17,10 @@ func PrintBoard(board game.Board) {
 	fmt.Println(game.BoardToString(board))
 }
 
+func PrintTurn(turn game.Tic) {
+	fmt.Printf("%s's turn\n", game.TicToString(turn))
+}
+
 func PrintGameEnd(board game.Board, winner game.Tic, moves byte) {
 	if winner != game.EMPTY_TIC {
 		fmt.Printf("%s won the game after %d moves!\n", game.TicToString(winner), moves)
