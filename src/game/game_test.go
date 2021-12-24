@@ -21,7 +21,7 @@ type (
 
 func TestBoardToString(t *testing.T) {
 	board := CreateEmptyBoard()
-	board_string := BoardToString(board)
+	board_string := BoardToString(&board)
 	board_string_expected := "[ ][ ][ ]\n[ ][ ][ ]\n[ ][ ][ ]"
 
 	if board_string != board_string_expected {
@@ -140,11 +140,11 @@ func TestTableCheckWin(t *testing.T) {
 	}
 
 	for i, test := range tests {
-		if output := CheckWin(test.input); output != test.expected {
+		if output := CheckWin(&test.input); output != test.expected {
 			t.Errorf(
 				"\nTest %d failed: \n%s inputted, \n%s/%d expected, \n%s/%d recieved",
 				i,
-				BoardToString(test.input),
+				BoardToString(&test.input),
 				TicToString(test.expected),
 				test.expected,
 				TicToString(output),
