@@ -45,6 +45,7 @@ func PlayGame(frontEnd FrontEnd) {
 		NextTurn(&turn)
 	}
 
+	frontEnd.PresentBoard(board)
 	frontEnd.EndGame(board, winner, moves)
 }
 
