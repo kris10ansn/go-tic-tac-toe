@@ -21,9 +21,9 @@ type (
 )
 
 type FrontEnd interface {
-	PresentBoard(board Board)
-	AwaitMove(board Board, turn Tic) (byte, byte)
-	EndGame(board Board, winner Tic, moves byte)
+	PresentBoard(board *Board)
+	AwaitMove(board *Board, turn Tic) (byte, byte)
+	EndGame(board *Board, winner Tic, moves byte)
 }
 
 func PlayGame(frontEnd FrontEnd) {
@@ -35,18 +35,18 @@ func PlayGame(frontEnd FrontEnd) {
 	)
 
 	for ; winner == EMPTY_TIC && moves < 9; moves++ {
-		frontEnd.PresentBoard(board)
+		frontEnd.PresentBoard(&board)
 
-		x, y := frontEnd.AwaitMove(board, turn)
+		x, y := frontEnd.AwaitMove(&board, turn)
 
 		SetBoardCoordinate(&board, x, y, turn)
 
-		winner = CheckWin(board)
+		winner = CheckWin(&board)
 		NextTurn(&turn)
 	}
 
-	frontEnd.PresentBoard(board)
-	frontEnd.EndGame(board, winner, moves)
+	frontEnd.PresentBoard(&board)
+	frontEnd.EndGame(&board, winner, moves)
 }
 
 func CreateEmptyBoard() Board {
@@ -61,7 +61,7 @@ func SetBoardCoordinate(board *Board, x byte, y byte, tic Tic) {
 	board[y][x] = tic
 }
 
-func CheckWin(board Board) Tic {
+func CheckWin(board *Board) Tic {
 	const X_WIN = 3 * X_TIC
 	const O_WIN = 3 * O_TIC
 
@@ -119,7 +119,7 @@ func NextTurn(turn *Tic) error {
 	}
 }
 
-func BoardToString(board Board) string {
+func BoardToString(board *Board) string {
 	var i byte
 	str := ""
 
