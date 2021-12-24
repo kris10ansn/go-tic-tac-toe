@@ -6,9 +6,9 @@ import (
 	"github.com/kris10ansn/go-tic-tac-toe/src/game"
 )
 
-type cliFrontEnd struct{}
+type CLIFrontEnd struct{}
 
-func (cliFrontEnd) AwaitMove(board game.Board) (byte, byte) {
+func (CLIFrontEnd) AwaitMove(board game.Board) (byte, byte) {
 	x, y, err := InputCoordinates(board)
 
 	for err != nil {
@@ -19,11 +19,11 @@ func (cliFrontEnd) AwaitMove(board game.Board) (byte, byte) {
 	return x, y
 }
 
-func (cliFrontEnd) PresentBoard(board game.Board) {
+func (CLIFrontEnd) PresentBoard(board game.Board) {
 	PrintBoard(board)
 }
 
-func (cliFrontEnd) EndGame(board game.Board, winner game.Tic, moves byte) {
+func (CLIFrontEnd) EndGame(board game.Board, winner game.Tic, moves byte) {
 	PrintBoard(board)
 
 	if winner != game.EMPTY_TIC {
@@ -36,7 +36,7 @@ func (cliFrontEnd) EndGame(board game.Board, winner game.Tic, moves byte) {
 }
 
 func New() game.FrontEnd {
-	return cliFrontEnd{}
+	return CLIFrontEnd{}
 }
 
 func InputByte(message string, input *byte) error {
