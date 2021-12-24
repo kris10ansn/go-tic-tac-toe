@@ -22,12 +22,10 @@ func (CLIFrontEnd) AwaitMove(board game.Board, turn game.Tic) (byte, byte) {
 }
 
 func (CLIFrontEnd) PresentBoard(board game.Board) {
-	PrintBoard(board)
+	fmt.Println(game.BoardToString(board))
 }
 
 func (CLIFrontEnd) EndGame(board game.Board, winner game.Tic, moves byte) {
-	PrintBoard(board)
-
 	if winner != game.EMPTY_TIC {
 		fmt.Printf("%s won the game after %d moves!\n", game.TicToString(winner), moves)
 	} else if moves == 9 {
@@ -46,10 +44,6 @@ func InputByte(message string, input *byte) error {
 	_, err := fmt.Scanf("%d\n", input)
 
 	return err
-}
-
-func PrintBoard(board game.Board) {
-	fmt.Println(game.BoardToString(board))
 }
 
 func PrintTurn(turn game.Tic) {
