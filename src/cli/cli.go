@@ -46,10 +46,6 @@ func InputByte(message string, input *byte) error {
 	return err
 }
 
-func PrintTurn(turn game.Tic) {
-	fmt.Printf("%s's turn\n", game.TicToString(turn))
-}
-
 func InputCoordinates(board game.Board) (byte, byte, error) {
 	var err error = nil
 
