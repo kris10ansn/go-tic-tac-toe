@@ -21,8 +21,8 @@ type (
 )
 
 type FrontEnd interface {
-	PresentBoard(Board)
-	AwaitMove(Board) (byte, byte)
+	PresentBoard(board Board)
+	AwaitMove(board Board) (byte, byte)
 	EndGame(board Board, winner Tic, moves byte)
 }
 
