@@ -9,18 +9,24 @@ import (
 )
 
 func main() {
-	var noArgs bool = len(os.Args) <= 1
-	var frontEnd game.FrontEnd
+	var (
+		frontEnd game.FrontEnd
+		mode     = GetCommandLineArgument(1, "cli")
+	)
 
-	if noArgs {
-		fmt.Println("No command line arguments passed, running as command line interface")
-	}
-
-	if noArgs || os.Args[1] == "cli" {
+	if mode == "cli" {
 		frontEnd = cli.New()
 	} else {
-		panic(fmt.Sprintf("Unsupported front-end mode: \"%s\" (arg 1)", os.Args[1]))
+		panic(fmt.Sprintf("Unsupported front-end mode: \"%s\" (arg 1)", mode))
 	}
 
 	game.PlayGame(frontEnd)
+}
+
+func GetCommandLineArgument(index int, defaultValue string) string {
+	if len(os.Args) >= index {
+		return os.Args[index]
+	} else {
+		return defaultValue
+	}
 }
