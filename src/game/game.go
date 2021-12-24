@@ -22,7 +22,7 @@ type (
 
 type FrontEnd interface {
 	PresentBoard(board Board)
-	AwaitMove(board Board) (byte, byte)
+	AwaitMove(board Board, turn Tic) (byte, byte)
 	EndGame(board Board, winner Tic, moves byte)
 }
 
@@ -37,7 +37,7 @@ func PlayGame(frontEnd FrontEnd) {
 	for ; winner == EMPTY_TIC && moves < 9; moves++ {
 		frontEnd.PresentBoard(board)
 
-		x, y := frontEnd.AwaitMove(board)
+		x, y := frontEnd.AwaitMove(board, turn)
 
 		SetBoardCoordinate(&board, x, y, turn)
 
