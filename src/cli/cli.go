@@ -8,7 +8,9 @@ import (
 
 type CLIFrontEnd struct{}
 
-func (CLIFrontEnd) AwaitMove(board game.Board) (byte, byte) {
+func (CLIFrontEnd) AwaitMove(board game.Board, turn game.Tic) (byte, byte) {
+	fmt.Printf("%s's turn\n", game.TicToString(turn))
+
 	x, y, err := InputCoordinates(board)
 
 	for err != nil {
