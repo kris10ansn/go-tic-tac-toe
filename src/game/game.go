@@ -1,6 +1,8 @@
 package game
 
-import "fmt"
+import (
+	"fmt"
+)
 
 /*
 	CheckWin depends on X_TIC and O_TIC being prime numbers, so that only
@@ -17,6 +19,34 @@ type (
 	Tic   = byte
 	Board = [3][3]Tic
 )
+
+type FrontEnd interface {
+	PresentBoard(Board)
+	AwaitMove(Board) (byte, byte)
+	EndGame(board Board, winner Tic, moves byte)
+}
+
+func PlayGame(frontEnd FrontEnd) {
+	var (
+		board  Board = CreateEmptyBoard()
+		winner Tic   = EMPTY_TIC
+		turn   Tic   = X_TIC
+		moves  byte  = 0
+	)
+
+	for ; winner == EMPTY_TIC && moves < 9; moves++ {
+		frontEnd.PresentBoard(board)
+
+		x, y := frontEnd.AwaitMove(board)
+
+		SetBoardCoordinate(&board, x, y, turn)
+
+		winner = CheckWin(board)
+		NextTurn(&turn)
+	}
+
+	frontEnd.EndGame(board, winner, moves)
+}
 
 func CreateEmptyBoard() Board {
 	return Board{

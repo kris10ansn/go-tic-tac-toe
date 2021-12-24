@@ -6,6 +6,39 @@ import (
 	"github.com/kris10ansn/go-tic-tac-toe/src/game"
 )
 
+type cliFrontEnd struct{}
+
+func (cliFrontEnd) AwaitMove(board game.Board) (byte, byte) {
+	x, y, err := InputCoordinates(board)
+
+	for err != nil {
+		fmt.Printf("%s\n", err)
+		x, y, err = InputCoordinates(board)
+	}
+
+	return x, y
+}
+
+func (cliFrontEnd) PresentBoard(board game.Board) {
+	PrintBoard(board)
+}
+
+func (cliFrontEnd) EndGame(board game.Board, winner game.Tic, moves byte) {
+	PrintBoard(board)
+
+	if winner != game.EMPTY_TIC {
+		fmt.Printf("%s won the game after %d moves!\n", game.TicToString(winner), moves)
+	} else if moves == 9 {
+		fmt.Println("It's a draw!")
+	} else {
+		panic("Unexpected behaviour")
+	}
+}
+
+func New() game.FrontEnd {
+	return cliFrontEnd{}
+}
+
 func InputByte(message string, input *byte) error {
 	fmt.Print(message)
 	_, err := fmt.Scanf("%d\n", input)
@@ -19,16 +52,6 @@ func PrintBoard(board game.Board) {
 
 func PrintTurn(turn game.Tic) {
 	fmt.Printf("%s's turn\n", game.TicToString(turn))
-}
-
-func PrintGameEnd(board game.Board, winner game.Tic, moves byte) {
-	if winner != game.EMPTY_TIC {
-		fmt.Printf("%s won the game after %d moves!\n", game.TicToString(winner), moves)
-	} else if moves == 9 {
-		fmt.Println("It's a draw!")
-	} else {
-		panic("Unexpected behaviour")
-	}
 }
 
 func InputCoordinates(board game.Board) (byte, byte, error) {
@@ -57,17 +80,4 @@ func InputCoordinates(board game.Board) (byte, byte, error) {
 	}
 
 	return x, y, nil
-}
-
-func WaitForMove(board game.Board) (byte, byte) {
-	var x byte
-	var y byte
-	var err error
-
-	for x, y, err = InputCoordinates(board); err != nil; {
-		fmt.Printf("%s\n", err)
-		x, y, err = InputCoordinates(board)
-	}
-
-	return x, y
 }

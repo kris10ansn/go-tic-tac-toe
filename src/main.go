@@ -1,31 +1,26 @@
 package main
 
 import (
+	"fmt"
+	"os"
+
 	"github.com/kris10ansn/go-tic-tac-toe/src/cli"
 	"github.com/kris10ansn/go-tic-tac-toe/src/game"
 )
 
 func main() {
-	var (
-		gameBoard game.Board = game.CreateEmptyBoard()
-		winner    game.Tic   = game.EMPTY_TIC
-		turn      game.Tic   = game.X_TIC
-		moves     byte       = 0
-	)
+	var noArgs bool = len(os.Args) <= 1
+	var frontEnd game.FrontEnd
 
-	cli.PrintBoard(gameBoard)
-
-	for ; winner == game.EMPTY_TIC && moves < 9; moves++ {
-		cli.PrintTurn(turn)
-
-		x, y := cli.WaitForMove(gameBoard)
-
-		game.SetBoardCoordinate(&gameBoard, x, y, turn)
-		cli.PrintBoard(gameBoard)
-
-		winner = game.CheckWin(gameBoard)
-		game.NextTurn(&turn)
+	if noArgs {
+		fmt.Println("No command line arguments passed, running as command line interface")
 	}
 
-	cli.PrintGameEnd(gameBoard, winner, moves)
+	if noArgs || os.Args[1] == "cli" {
+		frontEnd = cli.New()
+	} else {
+		panic(fmt.Sprintf("Unsupported front-end mode: \"%s\" (arg 1)", os.Args[1]))
+	}
+
+	game.PlayGame(frontEnd)
 }
