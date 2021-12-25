@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/kris10ansn/go-tic-tac-toe/src/frontend/commandline"
 	"github.com/kris10ansn/go-tic-tac-toe/src/game"
+	"github.com/kris10ansn/go-tic-tac-toe/src/game/frontend/commandline"
 )
 
 func main() {
