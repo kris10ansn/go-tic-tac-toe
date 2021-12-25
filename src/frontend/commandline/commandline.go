@@ -3,6 +3,7 @@ package commandline
 import (
 	"fmt"
 
+	"github.com/kris10ansn/go-tic-tac-toe/src/cli"
 	"github.com/kris10ansn/go-tic-tac-toe/src/game"
 )
 
@@ -39,25 +40,20 @@ func New() game.FrontEnd {
 	return CLIFrontEnd{}
 }
 
-func inputByte(message string, input *byte) error {
-	fmt.Print(message)
-	_, err := fmt.Scanf("%d\n", input)
-
-	return err
-}
-
 func inputCoordinates(board *game.Board) (byte, byte, error) {
-	var err error = nil
+	var (
+		x   byte
+		y   byte
+		err error
+	)
 
-	var y byte
-	err = inputByte("Row number (0-2):", &y)
+	y, err = cli.PromptByteInput("Row number (0-2):")
 
 	if err != nil {
 		return 0, 0, err
 	}
 
-	var x byte
-	err = inputByte("Column number (0-2): ", &x)
+	x, err = cli.PromptByteInput("Column number (0-2): ")
 
 	if err != nil {
 		return 0, 0, err
