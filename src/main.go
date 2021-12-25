@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/kris10ansn/go-tic-tac-toe/src/cli"
+	"github.com/kris10ansn/go-tic-tac-toe/src/frontend/commandline"
 	"github.com/kris10ansn/go-tic-tac-toe/src/game"
 )
 
@@ -15,7 +15,7 @@ func main() {
 	)
 
 	if mode == "cli" {
-		frontEnd = cli.New()
+		frontEnd = commandline.New()
 	} else {
 		panic(fmt.Sprintf("Unsupported front-end mode: \"%s\" (arg 1)", mode))
 	}
