@@ -12,11 +12,18 @@ type CLIFrontEnd struct{}
 func (CLIFrontEnd) AwaitMove(board *game.Board, turn game.Tic) (byte, byte) {
 	fmt.Printf("%s's turn\n", game.TicToString(turn))
 
-	x, y, err := inputCoordinates(board)
+	var (
+		x   byte
+		y   byte
+		err error
+	)
 
-	for err != nil {
-		fmt.Printf("%s\n", err)
-		x, y, err = inputCoordinates(board)
+	for {
+		if x, y, err = inputCoordinates(board); err != nil {
+			fmt.Printf("%s\n", err)
+		} else {
+			break
+		}
 	}
 
 	return x, y
