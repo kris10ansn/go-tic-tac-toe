@@ -11,11 +11,11 @@ type CLIFrontEnd struct{}
 func (CLIFrontEnd) AwaitMove(board *game.Board, turn game.Tic) (byte, byte) {
 	fmt.Printf("%s's turn\n", game.TicToString(turn))
 
-	x, y, err := InputCoordinates(board)
+	x, y, err := inputCoordinates(board)
 
 	for err != nil {
 		fmt.Printf("%s\n", err)
-		x, y, err = InputCoordinates(board)
+		x, y, err = inputCoordinates(board)
 	}
 
 	return x, y
@@ -39,25 +39,25 @@ func New() game.FrontEnd {
 	return CLIFrontEnd{}
 }
 
-func InputByte(message string, input *byte) error {
+func inputByte(message string, input *byte) error {
 	fmt.Print(message)
 	_, err := fmt.Scanf("%d\n", input)
 
 	return err
 }
 
-func InputCoordinates(board *game.Board) (byte, byte, error) {
+func inputCoordinates(board *game.Board) (byte, byte, error) {
 	var err error = nil
 
 	var y byte
-	err = InputByte("Row number (0-2):", &y)
+	err = inputByte("Row number (0-2):", &y)
 
 	if err != nil {
 		return 0, 0, err
 	}
 
 	var x byte
-	err = InputByte("Column number (0-2): ", &x)
+	err = inputByte("Column number (0-2): ", &x)
 
 	if err != nil {
 		return 0, 0, err
