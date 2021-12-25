@@ -11,7 +11,7 @@ import (
 func main() {
 	var (
 		frontEnd game.FrontEnd
-		mode     = cli.GetCommandLineArgument(1, "cli")
+		mode     = cli.GetArgument(1, "cli")
 	)
 
 	if mode == "cli" {

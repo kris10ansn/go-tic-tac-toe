@@ -17,7 +17,7 @@ func PromptByteInput(message string) (byte, error) {
 	return InputByte()
 }
 
-func GetCommandLineArgument(index int, defaultValue string) string {
+func GetArgument(index int, defaultValue string) string {
 	if len(os.Args) >= index {
 		return os.Args[index]
 	} else {
