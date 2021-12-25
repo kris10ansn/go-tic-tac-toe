@@ -17,7 +17,7 @@ func main() {
 	if mode == "cli" {
 		frontEnd = commandline.New()
 	} else {
-		panic(fmt.Sprintf("Unsupported front-end mode: \"%s\" (arg 1)", mode))
+		panic(fmt.Sprintf("Unsupported mode: \"%s\" (arg 1)", mode))
 	}
 
 	game.PlayGame(frontEnd)
