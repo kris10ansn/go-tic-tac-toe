@@ -18,7 +18,7 @@ func PromptByteInput(message string) (byte, error) {
 }
 
 func GetArgument(index int, defaultValue string) string {
-	if len(os.Args) >= index {
+	if len(os.Args) > index {
 		return os.Args[index]
 	} else {
 		return defaultValue
