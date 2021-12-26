@@ -25,12 +25,8 @@ func (server *GameServer) Run() {
 			log.Println(err)
 		}
 
-		log.Printf(
-			"Websocket connection on %s [%s => %s]\n",
-			r.URL.Path,
-			conn.RemoteAddr(),
-			conn.LocalAddr(),
-		)
+		log.Printf("Websocket connection on %s [%s => %s]",
+			r.URL.Path, conn.RemoteAddr(), conn.LocalAddr())
 	})
 
 	http.Handle("/", http.FileServer(http.Dir("public")))
