@@ -9,16 +9,10 @@ import (
 )
 
 func main() {
-	var (
-		frontEnd game.FrontEnd
-		mode     = cli.GetArgument(1, "cli")
-	)
-
-	if mode == "cli" {
-		frontEnd = commandline.New()
-	} else {
+	switch mode := cli.GetArgument(1, "cli"); mode {
+	case "cli":
+		game.PlayGame(commandline.New())
+	default:
 		panic(fmt.Sprintf("Unsupported mode: \"%s\" (arg 1)", mode))
 	}
-
-	game.PlayGame(frontEnd)
 }
