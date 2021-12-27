@@ -7,8 +7,6 @@ import (
 	"github.com/gorilla/websocket"
 )
 
-const BUF_SIZE = 1024
-
 type Game struct {
 	Name string
 }
@@ -19,7 +17,7 @@ type GameServer struct {
 
 func (server *GameServer) Run() {
 	http.HandleFunc("/socket/games", func(rw http.ResponseWriter, r *http.Request) {
-		conn, err := websocket.Upgrade(rw, r, nil, BUF_SIZE, BUF_SIZE)
+		conn, err := websocket.Upgrade(rw, r, nil, 1024, 1024)
 
 		if err != nil {
 			log.Println(err)
