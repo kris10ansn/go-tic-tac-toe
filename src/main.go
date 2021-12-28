@@ -17,6 +17,6 @@ func main() {
 		server := web.CreateServer()
 		server.Run()
 	default:
-		panic(fmt.Sprintf("Unsupported mode: \"%s\" (arg 1)", mode))
+		fmt.Printf("Unsupported mode: \"%s\" (arg 1), exiting...\n", mode)
 	}
 }
