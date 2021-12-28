@@ -1,15 +1,21 @@
 function createElement(htmlString) {
-    const element = new DOMParser().parseFromString(htmlString, "text/html");
-    return element.documentElement.querySelector("body").firstChild;
+    const template = document.createElement("template");
+    template.innerHTML = htmlString;
+    return template.content;
 }
 
-function appendGameToList({ id, name }) {
-    const gamesList = document.querySelector("ul#games");
+function appendGameToList({ name, id }) {
+    const gamesList = document.querySelector("table#games tbody");
     gamesList.appendChild(
         createElement(`
-            <li id="${id}">
-                ${name} <button>join game</button>
-            </li>
+            <tr id="${id}">
+                <td>${name}</td>
+                <td>
+                    <a href="/game?id=${id}">
+                        <button>join game</button>
+                    </a>
+                </td>
+            </tr>
         `)
     );
 }
@@ -17,17 +23,15 @@ function appendGameToList({ id, name }) {
 function handleCreateGameSubmits() {
     const createGameForm = document.forms.namedItem("create-game");
 
-    createGameForm.addEventListener("submit", (event) => {
+    createGameForm.addEventListener("submit", async (event) => {
         event.preventDefault();
 
         const data = Object.fromEntries(new FormData(createGameForm).entries());
-
-        fetch(`http://${location.host}/game/create`, {
-            method: "POST",
-            body: JSON.stringify(data),
-        });
-
         createGameForm.reset();
+
+        const response = await fetchAddGame(data);
+
+        location.href = `/game?id=${response.id}`;
     });
 }
 
@@ -64,11 +68,24 @@ function connectGamesSocket() {
     });
 }
 
-async function main() {
-    const games = await fetch(`http://${location.host}/game/list`).then(
-        (response) => response.json()
-    );
+async function fetchAddGame({ name }) {
+    return fetch(`/game/add`, {
+        method: "POST",
+        body: JSON.stringify({ name }),
+    }).then((it) => it.json());
+}
 
+async function fetchGames() {
+    return await fetch(`/game/list`)
+        .then((response) => response.json())
+        .catch((error) => {
+            console.error(error);
+            return [];
+        });
+}
+
+async function main() {
+    const games = await fetchGames();
     games.forEach((game) => appendGameToList(game));
 
     connectGamesSocket();
