@@ -46,7 +46,7 @@ func (g *Game) Join(conn *websocket.Conn) error {
 
 	g.setPlayer(tic, conn)
 
-	if g.playerX == nil && g.playerO == nil {
+	if g.playerX != nil && g.playerO != nil {
 		g.Start()
 	}
 
