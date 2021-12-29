@@ -13,6 +13,12 @@ type Player struct {
 	conn *websocket.Conn
 }
 
+func CreatePlayer(conn *websocket.Conn) *Player {
+	return &Player{
+		conn:  conn,
+	}
+}
+
 type Game struct {
 	Id   string `json:"id"`
 	Name string `json:"name"`
@@ -74,7 +80,7 @@ func (g *Game) writePlayers(message *WebsocketMessage) {
 
 func (g *Game) setPlayer(tic game.Tic, conn *websocket.Conn) {
 	var playerSpot = g.getPlayer(tic)
-	*playerSpot = &Player{conn: conn}
+	*playerSpot = CreatePlayer(conn)
 
 	conn.WriteJSON(WebsocketMessage{
 		Type: MessageTypeAssignTic,
