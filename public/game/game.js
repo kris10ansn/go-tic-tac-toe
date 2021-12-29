@@ -1,4 +1,4 @@
-function main() {
+function connectGameSocket() {
     const socket = new WebSocket(`ws:/${location.host}/socket/game`);
 
     socket.addEventListener("open", () => {
@@ -37,6 +37,10 @@ function main() {
             console.error("Websocket error", error);
         });
     });
+}
+
+function main() {
+    connectGameSocket();
 }
 
 main();
