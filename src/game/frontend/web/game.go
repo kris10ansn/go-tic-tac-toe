@@ -26,11 +26,21 @@ func (g *Game) AwaitMove(board *game.Board, turn game.Tic) (byte, byte) {
 }
 
 func (g *Game) PresentBoard(board *game.Board) {
-	panic("Not implemented")
+	g.writePlayers(&WebsocketMessage{
+		Type: MessageTypePresentBoard,
+		Data: board,
+	})
 }
 
 func (g *Game) EndGame(board *game.Board, winner game.Tic, moves byte) {
-	panic("Not implemented")
+	g.writePlayers(&WebsocketMessage{
+		Type: MessageTypeEndGame,
+		Data: struct {
+			board  *game.Board
+			winner game.Tic
+			moves  byte
+		}{board, winner, moves},
+	})
 }
 
 func (g *Game) Start() {
