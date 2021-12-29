@@ -3,8 +3,6 @@ package web
 import (
 	"log"
 	"net/http"
-
-	"github.com/google/uuid"
 )
 
 type GameServer struct {
@@ -32,10 +30,7 @@ func (server *GameServer) Run() {
 }
 
 func (server *GameServer) addGame(name string) string {
-	game := &Game{
-		Id:   uuid.NewString(),
-		Name: name,
-	}
+	game := CreateGame(name)
 
 	server.games[game.Id] = game
 

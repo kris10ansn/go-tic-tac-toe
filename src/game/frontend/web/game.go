@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/google/uuid"
 	"github.com/gorilla/websocket"
 	"github.com/kris10ansn/go-tic-tac-toe/src/game"
 )
@@ -25,6 +26,13 @@ type Game struct {
 
 	playerX *Player
 	playerO *Player
+}
+
+func CreateGame(name string) *Game {
+	return &Game{
+		Name: name,
+		Id:   uuid.NewString(),
+	}
 }
 
 func (g *Game) AwaitMove(board *game.Board, turn game.Tic) (byte, byte) {
