@@ -64,7 +64,7 @@ func (g *Game) Join(conn *websocket.Conn) error {
 		return errors.New("game is full")
 	}
 
-	*(g.getPlayer(tic)) = CreatePlayer(conn)
+	*(g.playerProperty(tic)) = CreatePlayer(conn)
 
 	conn.WriteJSON(WebsocketMessage{
 		Type: MessageTypeAssignTic,
@@ -83,7 +83,7 @@ func (g *Game) writePlayers(message *WebsocketMessage) {
 	g.playerO.conn.WriteJSON(message)
 }
 
-func (g *Game) getPlayer(tic game.Tic) **Player {
+func (g *Game) playerProperty(tic game.Tic) **Player {
 	if tic == game.X_TIC {
 		return &g.playerX
 	} else if tic == game.O_TIC {
