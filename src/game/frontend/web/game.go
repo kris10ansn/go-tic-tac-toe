@@ -9,12 +9,16 @@ import (
 	"github.com/kris10ansn/go-tic-tac-toe/src/game"
 )
 
+type Player struct {
+	conn *websocket.Conn
+}
+
 type Game struct {
 	Id   string `json:"id"`
 	Name string `json:"name"`
 
-	playerX *websocket.Conn
-	playerO *websocket.Conn
+	playerX *Player
+	playerO *Player
 }
 
 func (g *Game) AwaitMove(board *game.Board, turn game.Tic) (byte, byte) {
@@ -54,20 +58,21 @@ func (g *Game) Join(conn *websocket.Conn) error {
 }
 
 func (g *Game) setPlayer(tic game.Tic, conn *websocket.Conn) {
-	var p **websocket.Conn
+	var playerSpot = g.getPlayer(tic)
+	*playerSpot = &Player{conn: conn}
 
+	conn.WriteJSON(WebsocketMessage{
+		Type: MessageTypeAssignTic,
+		Data: game.TicToString(tic),
+	})
+}
+
+func (g *Game) getPlayer(tic game.Tic) **Player {
 	if tic == game.X_TIC {
-		p = &g.playerX
+		return &g.playerX
 	} else if tic == game.O_TIC {
-		p = &g.playerO
+		return &g.playerO
 	} else {
 		panic(fmt.Sprintf("Unknown tic %d", tic))
 	}
-
-	*p = conn
-
-	conn.WriteJSON(WebsocketMessage{
-		Type: "assign-tic",
-		Data: game.TicToString(tic),
-	})
 }
