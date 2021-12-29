@@ -57,6 +57,11 @@ func (g *Game) Join(conn *websocket.Conn) error {
 	return nil
 }
 
+func (g *Game) writePlayers(message *WebsocketMessage) {
+	g.playerX.conn.WriteJSON(message)
+	g.playerO.conn.WriteJSON(message)
+}
+
 func (g *Game) setPlayer(tic game.Tic, conn *websocket.Conn) {
 	var playerSpot = g.getPlayer(tic)
 	*playerSpot = &Player{conn: conn}
