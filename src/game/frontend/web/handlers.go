@@ -52,13 +52,13 @@ func (server *GameServer) handleGameSocket(rw http.ResponseWriter, r *http.Reque
 
 		if joinError != nil {
 			conn.WriteJSON(WebsocketMessage{
-				Type: "error",
+				Type: MessageTypeError,
 				Data: joinError.Error(),
 			})
 		}
 	} else {
 		conn.WriteJSON(WebsocketMessage{
-			Type: "error",
+			Type: MessageTypeError,
 			Data: "game does not exist",
 		})
 	}

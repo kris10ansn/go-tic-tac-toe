@@ -40,7 +40,7 @@ func (server *GameServer) addGame(name string) string {
 	server.games[game.Id] = game
 
 	server.gamesBroadcaster.Broadcast(&WebsocketMessage{
-		Type: "add-game",
+		Type: MessageTypeAddGame,
 		Data: game,
 	})
 
