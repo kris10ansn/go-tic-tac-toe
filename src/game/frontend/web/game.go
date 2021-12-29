@@ -64,7 +64,12 @@ func (g *Game) Join(conn *websocket.Conn) error {
 		return errors.New("game is full")
 	}
 
-	g.setPlayer(tic, conn)
+	*(g.getPlayer(tic)) = CreatePlayer(conn)
+
+	conn.WriteJSON(WebsocketMessage{
+		Type: MessageTypeAssignTic,
+		Data: game.TicToString(tic),
+	})
 
 	if g.playerX != nil && g.playerO != nil {
 		g.Start()
@@ -76,16 +81,6 @@ func (g *Game) Join(conn *websocket.Conn) error {
 func (g *Game) writePlayers(message *WebsocketMessage) {
 	g.playerX.conn.WriteJSON(message)
 	g.playerO.conn.WriteJSON(message)
-}
-
-func (g *Game) setPlayer(tic game.Tic, conn *websocket.Conn) {
-	var playerSpot = g.getPlayer(tic)
-	*playerSpot = CreatePlayer(conn)
-
-	conn.WriteJSON(WebsocketMessage{
-		Type: MessageTypeAssignTic,
-		Data: game.TicToString(tic),
-	})
 }
 
 func (g *Game) getPlayer(tic game.Tic) **Player {
