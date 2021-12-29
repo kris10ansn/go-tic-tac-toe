@@ -12,7 +12,7 @@ func (server *GameServer) handleGamesSocket(rw http.ResponseWriter, r *http.Requ
 	conn, err := websocket.Upgrade(rw, r, nil, 1024, 1024)
 
 	if err != nil {
-		log.Println(err)
+		log.Println("Error:", err)
 	}
 
 	LogWebsocketConnection(conn, r)
@@ -22,7 +22,7 @@ func (server *GameServer) handleGamesSocket(rw http.ResponseWriter, r *http.Requ
 
 	for _, message, err := conn.ReadMessage(); true; {
 		if err != nil {
-			log.Println(err)
+			log.Println("Error:", err)
 			return
 		}
 
@@ -34,7 +34,7 @@ func (server *GameServer) handleGameSocket(rw http.ResponseWriter, r *http.Reque
 	conn, err := websocket.Upgrade(rw, r, nil, 1024, 1024)
 
 	if err != nil {
-		log.Println(err)
+		log.Println("Error:", err)
 	}
 
 	LogWebsocketConnection(conn, r)
