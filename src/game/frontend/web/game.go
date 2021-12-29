@@ -76,7 +76,7 @@ func (g *Game) Join(conn *websocket.Conn) error {
 
 	conn.WriteJSON(WebsocketMessage{
 		Type: MessageTypeAssignTic,
-		Data: game.TicToString(tic),
+		Data: tic,
 	})
 
 	if g.playerX != nil && g.playerO != nil {
