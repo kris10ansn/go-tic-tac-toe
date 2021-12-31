@@ -40,14 +40,17 @@ func (server *GameServer) handleGameSocket(rw http.ResponseWriter, r *http.Reque
 	LogWebsocketConnection(conn, r)
 
 	var joinMessage struct {
-		GameId string `json:"gameId"`
+		Type string `json:"type"`
+		Data struct {
+			GameId string `json:"gameId"`
+		} `json:"data"`
 	}
 
 	if err1 := conn.ReadJSON(&joinMessage); err1 != nil {
 		log.Println(err1)
 	}
 
-	if game, exists := server.games[joinMessage.GameId]; exists {
+	if game, exists := server.games[joinMessage.Data.GameId]; exists {
 		joinError := game.Join(conn)
 
 		if joinError != nil {
