@@ -10,13 +10,23 @@ import (
 	"github.com/kris10ansn/go-tic-tac-toe/src/game"
 )
 
+type GameMove struct {
+	X byte `json:"x"`
+	Y byte `json:"y"`
+}
+
 type Player struct {
 	conn *websocket.Conn
+
+	moves chan GameMove
 }
 
 func CreatePlayer(conn *websocket.Conn) *Player {
 	return &Player{
 		conn:  conn,
+		moves: make(chan GameMove),
+	}
+}
 	}
 }
 
