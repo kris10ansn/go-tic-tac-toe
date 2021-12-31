@@ -83,7 +83,11 @@ func CreateGame(name string) *Game {
 }
 
 func (g *Game) AwaitMove(board *game.Board, turn game.Tic) (byte, byte) {
-	panic("Not implemented")
+	player := *g.playerProperty(turn)
+	player.conn.WriteJSON(WebsocketMessage{MessageTypeAwaitingMove, ""})
+
+	move := <-player.moves
+	return move.X, move.Y
 }
 
 func (g *Game) PresentBoard(board *game.Board) {
