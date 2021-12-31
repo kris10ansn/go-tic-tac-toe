@@ -110,6 +110,7 @@ func (g *Game) EndGame(board *game.Board, winner game.Tic, moves byte) {
 
 func (g *Game) Start() {
 	log.Printf("[%s] starting game...", g.Id)
+	game.PlayGame(g)
 }
 
 func (g *Game) Join(conn *websocket.Conn) error {
