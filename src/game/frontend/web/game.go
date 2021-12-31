@@ -72,7 +72,8 @@ func (g *Game) Join(conn *websocket.Conn) error {
 		return errors.New("game is full")
 	}
 
-	*(g.playerProperty(tic)) = CreatePlayer(conn)
+	player := CreatePlayer(conn)
+	*(g.playerProperty(tic)) = player
 
 	conn.WriteJSON(WebsocketMessage{
 		Type: MessageTypeAssignTic,
