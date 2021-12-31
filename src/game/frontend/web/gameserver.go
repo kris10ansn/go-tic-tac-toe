@@ -6,13 +6,13 @@ import (
 )
 
 type GameServer struct {
-	games            map[string]*Game
+	games            map[string]*WebGame
 	gamesBroadcaster *Broadcaster
 }
 
 func CreateServer() *GameServer {
 	return &GameServer{
-		games:            map[string]*Game{},
+		games:            map[string]*WebGame{},
 		gamesBroadcaster: CreateBroadcaster(),
 	}
 }

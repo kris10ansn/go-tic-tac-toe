@@ -68,7 +68,7 @@ func (server *GameServer) handleGameSocket(rw http.ResponseWriter, r *http.Reque
 }
 
 func (server *GameServer) handleListGames(rw http.ResponseWriter, r *http.Request) {
-	gamesList := []*Game{}
+	gamesList := []*WebGame{}
 
 	for _, game := range server.games {
 		gamesList = append(gamesList, game)

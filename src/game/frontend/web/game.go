@@ -67,7 +67,7 @@ func (p *Player) ReadMessages() {
 	}
 }
 
-type Game struct {
+type WebGame struct {
 	Id   string `json:"id"`
 	Name string `json:"name"`
 
@@ -75,14 +75,14 @@ type Game struct {
 	playerO *Player
 }
 
-func CreateGame(name string) *Game {
-	return &Game{
+func CreateGame(name string) *WebGame {
+	return &WebGame{
 		Name: name,
 		Id:   uuid.NewString(),
 	}
 }
 
-func (g *Game) AwaitMove(board *game.Board, turn game.Tic) (byte, byte) {
+func (g *WebGame) AwaitMove(board *game.Board, turn game.Tic) (byte, byte) {
 	player := *g.playerProperty(turn)
 	player.conn.WriteJSON(WebsocketMessage{MessageTypeAwaitingMove, ""})
 
@@ -90,14 +90,14 @@ func (g *Game) AwaitMove(board *game.Board, turn game.Tic) (byte, byte) {
 	return move.X, move.Y
 }
 
-func (g *Game) PresentBoard(board *game.Board) {
+func (g *WebGame) PresentBoard(board *game.Board) {
 	g.writePlayers(&WebsocketMessage{
 		Type: MessageTypePresentBoard,
 		Data: board,
 	})
 }
 
-func (g *Game) EndGame(board *game.Board, winner game.Tic, moves byte) {
+func (g *WebGame) EndGame(board *game.Board, winner game.Tic, moves byte) {
 	g.writePlayers(&WebsocketMessage{
 		Type: MessageTypeEndGame,
 		Data: struct {
@@ -108,12 +108,12 @@ func (g *Game) EndGame(board *game.Board, winner game.Tic, moves byte) {
 	})
 }
 
-func (g *Game) Start() {
+func (g *WebGame) Start() {
 	log.Printf("[%s] starting game...", g.Id)
 	game.PlayGame(g)
 }
 
-func (g *Game) Join(conn *websocket.Conn) error {
+func (g *WebGame) Join(conn *websocket.Conn) error {
 	var tic game.Tic
 
 	if g.playerX == nil {
@@ -141,12 +141,12 @@ func (g *Game) Join(conn *websocket.Conn) error {
 	return nil
 }
 
-func (g *Game) writePlayers(message *WebsocketMessage) {
+func (g *WebGame) writePlayers(message *WebsocketMessage) {
 	g.playerX.conn.WriteJSON(message)
 	g.playerO.conn.WriteJSON(message)
 }
 
-func (g *Game) playerProperty(tic game.Tic) **Player {
+func (g *WebGame) playerProperty(tic game.Tic) **Player {
 	if tic == game.X_TIC {
 		return &g.playerX
 	} else if tic == game.O_TIC {
