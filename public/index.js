@@ -59,7 +59,10 @@ function connectGamesSocket() {
         });
 
         gamesSocket.addEventListener("close", (event) => {
-            console.log("Websocket connection closed", event);
+            const message = "Websocket connection closed";
+
+            window.confirm(message) && window.location.reload();
+            console.log(message, event);
         });
 
         gamesSocket.addEventListener("error", (error) => {
