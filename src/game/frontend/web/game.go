@@ -1,6 +1,7 @@
 package web
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"log"
@@ -27,6 +28,42 @@ func CreatePlayer(conn *websocket.Conn) *Player {
 		moves: make(chan GameMove),
 	}
 }
+
+type WebsocketMoveMessage struct {
+	Type string   `json:"type"`
+	Data GameMove `json:"data"`
+}
+
+func (p *Player) ReadMessages() {
+	for {
+		_, msg, err := p.conn.ReadMessage()
+
+		if err != nil {
+			log.Println("Error:", err)
+			return
+		}
+
+		var message WebsocketMessage
+		json.Unmarshal(msg, &message)
+
+		switch message.Type {
+		case MessageTypeClientMove:
+			{
+				var moveMessage WebsocketMoveMessage
+				json.Unmarshal(msg, &moveMessage)
+
+				if err != nil {
+					log.Println("Error:", err)
+					break
+				}
+
+				p.moves <- moveMessage.Data
+			}
+		default:
+			{
+				log.Printf("Message with unknown type \"%s\" received", message.Type)
+			}
+		}
 	}
 }
 
