@@ -50,9 +50,9 @@ func (g *Game) EndGame(board *game.Board, winner game.Tic, moves byte) {
 	g.writePlayers(&WebsocketMessage{
 		Type: MessageTypeEndGame,
 		Data: struct {
-			board  *game.Board
-			winner game.Tic
-			moves  byte
+			Board  *game.Board `json:"board"`
+			Winner game.Tic    `json:"winner"`
+			Moves  byte        `json:"moves"`
 		}{board, winner, moves},
 	})
 }
