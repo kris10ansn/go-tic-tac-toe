@@ -122,6 +122,8 @@ func (g *Game) Join(conn *websocket.Conn) error {
 	player := CreatePlayer(conn)
 	*(g.playerProperty(tic)) = player
 
+	go player.ReadMessages()
+
 	conn.WriteJSON(WebsocketMessage{
 		Type: MessageTypeAssignTic,
 		Data: tic,
