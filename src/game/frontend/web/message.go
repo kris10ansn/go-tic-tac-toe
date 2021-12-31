@@ -6,6 +6,8 @@ const (
 	MessageTypeAddGame      = "add-game"
 	MessageTypeAssignTic    = "assign-tic"
 	MessageTypeEndGame      = "end-game"
+	MessageTypeAwaitingMove = "await-move"
+	MessageTypeClientMove   = "move"
 )
 
 type WebsocketMessage struct {
