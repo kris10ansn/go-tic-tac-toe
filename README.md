@@ -4,4 +4,6 @@ This is a personal project for learning golang, I decided to make a tic-tac-toe 
 
 ## Todo
 
--   [ ] make web back/front-end
+-   [x] make web back/front-end
+
+-   [ ] game struct with different types of players (cli, websocket, computer?)
