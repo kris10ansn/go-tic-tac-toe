@@ -1,3 +1,7 @@
+import { confirmRedirect } from "../util/navigation.js";
+import { copyMatrix, searchParam } from "../util/util.js";
+import { websocketSend } from "../util/websocket.js";
+
 const gameTable = document.querySelector("table#game tbody");
 
 const X_TIC = 11;
@@ -14,16 +18,11 @@ const globalState = {
 };
 
 function ticToString(tic) {
-    switch (tic) {
-        case X_TIC:
-            return "x";
-        case O_TIC:
-            return "o";
-        case EMPTY_TIC:
-            return " ";
-        default:
-            throw new Error(`Unknown tic ${tic}!`);
-    }
+    if (tic === X_TIC) return "x";
+    if (tic === O_TIC) return "o";
+    if (tic === EMPTY_TIC) return " ";
+
+    throw new Error(`Unknown tic ${tic}!`);
 }
 
 function renderBoard(board, tableElement) {
@@ -49,83 +48,55 @@ function moveFromClickEvent(event) {
     return null;
 }
 
+function sendJoinMessage(socket, gameId) {
+    websocketSend(socket, { type: "join", data: { gameId } });
+}
+
+function sendMoveMessage(socket, move) {
+    websocketSend(socket, { type: "move", data: move });
+}
+
 function connectGameSocket() {
     const socket = new WebSocket(`ws:/${location.host}/socket/game`);
 
     socket.addEventListener("open", () => {
-        console.log("Websocket connected!");
+        sendJoinMessage(socket, searchParam("id"));
 
-        const gameId = new URLSearchParams(location.search).get("id");
+        socket.addEventListener("message", ({ data: dataString }) => {
+            const { type, data } = JSON.parse(dataString);
 
-        socket.send(
-            JSON.stringify({
-                type: "join",
-                data: { gameId },
-            })
+            if (type === "assign-tic") globalState.tic = data;
+            if (type === "present-board") {
+                copyMatrix(data, globalState.board);
+                renderBoard(globalState.board, gameTable);
+            }
+
+            if (type === "await-move") {
+                const game = document.querySelector("table#game");
+
+                game.addEventListener("click", function handler(event) {
+                    const move = moveFromClickEvent(event);
+
+                    if (move != null) {
+                        sendMoveMessage(socket, move);
+                        game.removeEventListener("click", handler);
+                    }
+                });
+            }
+
+            if (type === "end-game") {
+            }
+
+            if (type === "error") confirmRedirect(`Error: ${data}`, "/");
+        });
+
+        socket.addEventListener("close", () =>
+            confirmRedirect("Websocket connection closed", "/")
         );
 
-        socket.addEventListener("message", (msg) => {
-            const message = JSON.parse(msg.data);
-
-            console.log(message.type, message.data);
-
-            switch (message.type) {
-                case "assign-tic": {
-                    globalState.tic = message.data;
-                    break;
-                }
-
-                case "present-board": {
-                    for (let y = 0; y < 3; y++) {
-                        for (let x = 0; x < 3; x++) {
-                            globalState.board[y][x] = message.data[y][x];
-                        }
-                    }
-
-                    renderBoard(globalState.board, gameTable);
-                    break;
-                }
-
-                case "await-move": {
-                    const handler = (event) => {
-                        const move = moveFromClickEvent(event);
-
-                        if (move != null) {
-                            socket.send(
-                                JSON.stringify({
-                                    type: "move",
-                                    data: move,
-                                })
-                            );
-
-                            game.removeEventListener("click", handler);
-                        }
-                    };
-                    game.addEventListener("click", handler);
-                    break;
-                }
-
-                case "end-game": {
-                    break;
-                }
-
-                case "error": {
-                    window.confirm(`Websocket error: ${message.data}`) &&
-                        (location.href = "/");
-                    break;
-                }
-            }
-        });
-
-        socket.addEventListener("close", (event) => {
-            window.confirm("Websocket connection closed") &&
-                (location.href = "/");
-            console.log("Websocket connection closed", event);
-        });
-
-        socket.addEventListener("error", (error) => {
-            console.error("Websocket error", error);
-        });
+        socket.addEventListener("error", (error) =>
+            console.error("Websocket error", error)
+        );
     });
 }
 

@@ -1,8 +1,6 @@
-function createElement(htmlString) {
-    const template = document.createElement("template");
-    template.innerHTML = htmlString;
-    return template.content;
-}
+import { fetchAddGame, fetchGames } from "./util/fetch.js";
+import { confirmReload, navigate } from "./util/navigation.js";
+import { extractFormData, createElement } from "./util/util.js";
 
 function appendGameToList({ name, id }) {
     const gamesList = document.querySelector("table#games tbody");
@@ -21,17 +19,17 @@ function appendGameToList({ name, id }) {
 }
 
 function handleCreateGameSubmits() {
-    const createGameForm = document.forms.namedItem("create-game");
+    const formCreateGame = document.forms.namedItem("create-game");
 
-    createGameForm.addEventListener("submit", async (event) => {
+    formCreateGame.addEventListener("submit", (event) => {
         event.preventDefault();
+        const { name } = extractFormData(formCreateGame);
 
-        const data = Object.fromEntries(new FormData(createGameForm).entries());
-        createGameForm.reset();
+        fetchAddGame({ name })
+            .then(({ id }) => navigate(`/game?id=${id}`))
+            .catch(console.error);
 
-        const response = await fetchAddGame(data);
-
-        location.href = `/game?id=${response.id}`;
+        formCreateGame.reset();
     });
 }
 
@@ -39,57 +37,24 @@ function connectGamesSocket() {
     const gamesSocket = new WebSocket(`ws:/${location.host}/socket/games`);
 
     gamesSocket.addEventListener("open", () => {
-        console.log("Websocket connected!");
+        gamesSocket.addEventListener("message", ({ data: dataString }) => {
+            const { type, data } = JSON.parse(dataString);
 
-        gamesSocket.addEventListener("message", (msg) => {
-            const message = JSON.parse(msg.data);
-
-            switch (message.type) {
-                case "add-game": {
-                    appendGameToList(message.data);
-                    break;
-                }
-                default: {
-                    console.log(
-                        "Websocket message with unknown message type received",
-                        message
-                    );
-                }
-            }
+            if (type === "add-game") appendGameToList(data);
         });
 
-        gamesSocket.addEventListener("close", (event) => {
-            const message = "Websocket connection closed";
+        gamesSocket.addEventListener("close", () =>
+            confirmReload("Websocket connection closed")
+        );
 
-            window.confirm(message) && window.location.reload();
-            console.log(message, event);
-        });
-
-        gamesSocket.addEventListener("error", (error) => {
-            console.error("Websocket error", error);
-        });
+        gamesSocket.addEventListener("error", (error) =>
+            console.error("Websocket error", error)
+        );
     });
 }
 
-async function fetchAddGame({ name }) {
-    return fetch(`/game/add`, {
-        method: "POST",
-        body: JSON.stringify({ name }),
-    }).then((it) => it.json());
-}
-
-async function fetchGames() {
-    return await fetch(`/game/list`)
-        .then((response) => response.json())
-        .catch((error) => {
-            console.error(error);
-            return [];
-        });
-}
-
 async function main() {
-    const games = await fetchGames();
-    games.forEach((game) => appendGameToList(game));
+    fetchGames().then((games) => games.forEach(appendGameToList));
 
     connectGamesSocket();
     handleCreateGameSubmits();
