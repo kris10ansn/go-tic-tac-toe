@@ -120,10 +120,9 @@ func NextTurn(turn *Tic) error {
 }
 
 func BoardToString(board *Board) string {
-	var i byte
 	str := ""
 
-	for i = 0; i < 3; i++ {
+	for i := 0; i < 3; i++ {
 		for _, val := range board[i] {
 			str += fmt.Sprintf("[%s]", TicToString(val))
 		}
