@@ -22,7 +22,7 @@ type (
 
 type FrontEnd interface {
 	PresentBoard(board *Board)
-	AwaitMove(board *Board, turn Tic) (byte, byte)
+	AwaitMove(board *Board, turn Tic) (int, int)
 	EndGame(board *Board, winner Tic, moves byte)
 }
 
@@ -57,7 +57,7 @@ func CreateEmptyBoard() Board {
 	}
 }
 
-func SetBoardCoordinate(board *Board, x byte, y byte, tic Tic) {
+func SetBoardCoordinate(board *Board, x int, y int, tic Tic) {
 	board[y][x] = tic
 }
 
