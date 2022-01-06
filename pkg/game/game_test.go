@@ -21,7 +21,7 @@ type (
 
 func TestBoardToString(t *testing.T) {
 	board := CreateEmptyBoard()
-	board_string := BoardToString(&board)
+	board_string := BoardToString(board)
 	board_string_expected := "[ ][ ][ ]\n[ ][ ][ ]\n[ ][ ][ ]"
 
 	if board_string != board_string_expected {

@@ -28,29 +28,29 @@ type FrontEnd interface {
 
 func PlayGame(frontEnd FrontEnd) {
 	var (
-		board  Board = CreateEmptyBoard()
-		winner Tic   = EMPTY_TIC
-		turn   Tic   = X_TIC
-		moves  byte  = 0
+		board  *Board = CreateEmptyBoard()
+		winner Tic    = EMPTY_TIC
+		turn   Tic    = X_TIC
+		moves  byte   = 0
 	)
 
 	for ; winner == EMPTY_TIC && moves < 9; moves++ {
-		frontEnd.PresentBoard(&board)
+		frontEnd.PresentBoard(board)
 
-		x, y := frontEnd.AwaitMove(&board, turn)
+		x, y := frontEnd.AwaitMove(board, turn)
 
-		SetBoardCoordinate(&board, x, y, turn)
+		SetBoardCoordinate(board, x, y, turn)
 
-		winner = CheckWin(&board)
+		winner = CheckWin(board)
 		NextTurn(&turn)
 	}
 
-	frontEnd.PresentBoard(&board)
-	frontEnd.EndGame(&board, winner, moves)
+	frontEnd.PresentBoard(board)
+	frontEnd.EndGame(board, winner, moves)
 }
 
-func CreateEmptyBoard() Board {
-	return Board{
+func CreateEmptyBoard() *Board {
+	return &Board{
 		{EMPTY_TIC, EMPTY_TIC, EMPTY_TIC},
 		{EMPTY_TIC, EMPTY_TIC, EMPTY_TIC},
 		{EMPTY_TIC, EMPTY_TIC, EMPTY_TIC},
