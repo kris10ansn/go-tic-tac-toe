@@ -8,8 +8,13 @@ import (
 	"github.com/gorilla/websocket"
 )
 
+var upgrader = websocket.Upgrader{
+	ReadBufferSize:  1024,
+	WriteBufferSize: 1024,
+}
+
 func (server *GameServer) handleGamesSocket(rw http.ResponseWriter, r *http.Request) {
-	conn, err := websocket.Upgrade(rw, r, nil, 1024, 1024)
+	conn, err := upgrader.Upgrade(rw, r, nil)
 
 	if err != nil {
 		log.Println("Error:", err)
@@ -31,7 +36,7 @@ func (server *GameServer) handleGamesSocket(rw http.ResponseWriter, r *http.Requ
 }
 
 func (server *GameServer) handleGameSocket(rw http.ResponseWriter, r *http.Request) {
-	conn, err := websocket.Upgrade(rw, r, nil, 1024, 1024)
+	conn, err := upgrader.Upgrade(rw, r, nil)
 
 	if err != nil {
 		log.Println("Error:", err)
