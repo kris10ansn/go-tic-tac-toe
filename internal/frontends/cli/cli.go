@@ -1,9 +1,8 @@
-package commandline
+package cli
 
 import (
 	"fmt"
 
-	"github.com/kris10ansn/go-tic-tac-toe/pkg/cli"
 	"github.com/kris10ansn/go-tic-tac-toe/pkg/game"
 )
 
@@ -54,13 +53,13 @@ func inputCoordinates(board *game.Board) (byte, byte, error) {
 		err error
 	)
 
-	y, err = cli.PromptByteInput("Row number (0-2):")
+	y, err = promptByteInput("Row number (0-2):")
 
 	if err != nil {
 		return 0, 0, err
 	}
 
-	x, err = cli.PromptByteInput("Column number (0-2): ")
+	x, err = promptByteInput("Column number (0-2): ")
 
 	if err != nil {
 		return 0, 0, err
@@ -75,4 +74,16 @@ func inputCoordinates(board *game.Board) (byte, byte, error) {
 	}
 
 	return x, y, nil
+}
+
+func inputByte() (byte, error) {
+	var result byte
+	_, err := fmt.Scanf("%d\n", &result)
+
+	return result, err
+}
+
+func promptByteInput(message string) (byte, error) {
+	fmt.Print(message)
+	return inputByte()
 }
