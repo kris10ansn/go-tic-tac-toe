@@ -73,6 +73,8 @@ type WebGame struct {
 
 	playerX *Player
 	playerO *Player
+
+	game.FrontEnd
 }
 
 func CreateGame(name string) *WebGame {

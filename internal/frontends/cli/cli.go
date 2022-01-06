@@ -6,7 +6,9 @@ import (
 	"github.com/kris10ansn/go-tic-tac-toe/pkg/game"
 )
 
-type CLIFrontEnd struct{}
+type CLIFrontEnd struct {
+	game.FrontEnd
+}
 
 func (CLIFrontEnd) AwaitMove(board *game.Board, turn game.Tic) (int, int) {
 	fmt.Printf("%s's turn\n", game.TicToString(turn))
