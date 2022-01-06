@@ -12,8 +12,8 @@ import (
 )
 
 type GameMove struct {
-	X byte `json:"x"`
-	Y byte `json:"y"`
+	X int `json:"x"`
+	Y int `json:"y"`
 }
 
 type Player struct {
@@ -82,7 +82,7 @@ func CreateGame(name string) *WebGame {
 	}
 }
 
-func (g *WebGame) AwaitMove(board *game.Board, turn game.Tic) (byte, byte) {
+func (g *WebGame) AwaitMove(board *game.Board, turn game.Tic) (int, int) {
 	player := *g.playerProperty(turn)
 	player.conn.WriteJSON(WebsocketMessage{MessageTypeAwaitingMove, ""})
 
