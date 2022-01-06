@@ -42,10 +42,6 @@ func (CLIFrontEnd) EndGame(board *game.Board, winner game.Tic, moves byte) {
 	}
 }
 
-func New() game.FrontEnd {
-	return CLIFrontEnd{}
-}
-
 func inputCoordinates(board *game.Board) (byte, byte, error) {
 	var (
 		x   byte

@@ -12,7 +12,7 @@ import (
 func main() {
 	switch mode := getCommandLineArgument(1, "cli"); mode {
 	case "cli":
-		game.PlayGame(cli.New())
+		game.PlayGame(cli.CLIFrontEnd{})
 	case "web":
 		server := web.CreateServer()
 		server.Run()
