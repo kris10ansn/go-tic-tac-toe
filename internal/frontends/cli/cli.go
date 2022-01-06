@@ -8,12 +8,12 @@ import (
 
 type CLIFrontEnd struct{}
 
-func (CLIFrontEnd) AwaitMove(board *game.Board, turn game.Tic) (byte, byte) {
+func (CLIFrontEnd) AwaitMove(board *game.Board, turn game.Tic) (int, int) {
 	fmt.Printf("%s's turn\n", game.TicToString(turn))
 
 	var (
-		x   byte
-		y   byte
+		x   int
+		y   int
 		err error
 	)
 
@@ -42,20 +42,22 @@ func (CLIFrontEnd) EndGame(board *game.Board, winner game.Tic, moves byte) {
 	}
 }
 
-func inputCoordinates(board *game.Board) (byte, byte, error) {
+func inputCoordinates(board *game.Board) (int, int, error) {
 	var (
-		x   byte
-		y   byte
+		x   int
+		y   int
 		err error
 	)
 
-	y, err = promptByteInput("Row number (0-2):")
+	fmt.Print("Row number (0-2):")
+	_, err = fmt.Scanf("%d\n", &y)
 
 	if err != nil {
 		return 0, 0, err
 	}
 
-	x, err = promptByteInput("Column number (0-2): ")
+	fmt.Print("Column number (0-2):")
+	_, err = fmt.Scanf("%d\n", &x)
 
 	if err != nil {
 		return 0, 0, err
@@ -70,16 +72,4 @@ func inputCoordinates(board *game.Board) (byte, byte, error) {
 	}
 
 	return x, y, nil
-}
-
-func inputByte() (byte, error) {
-	var result byte
-	_, err := fmt.Scanf("%d\n", &result)
-
-	return result, err
-}
-
-func promptByteInput(message string) (byte, error) {
-	fmt.Print(message)
-	return inputByte()
 }
