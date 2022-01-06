@@ -8,7 +8,7 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/gorilla/websocket"
-	"github.com/kris10ansn/go-tic-tac-toe/src/game"
+	"github.com/kris10ansn/go-tic-tac-toe/pkg/game"
 )
 
 type GameMove struct {

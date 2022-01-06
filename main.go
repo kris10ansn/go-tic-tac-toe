@@ -3,10 +3,10 @@ package main
 import (
 	"fmt"
 
-	"github.com/kris10ansn/go-tic-tac-toe/src/cli"
-	"github.com/kris10ansn/go-tic-tac-toe/src/game"
-	"github.com/kris10ansn/go-tic-tac-toe/src/game/frontend/commandline"
-	"github.com/kris10ansn/go-tic-tac-toe/src/game/frontend/web"
+	"github.com/kris10ansn/go-tic-tac-toe/internal/frontends/commandline"
+	"github.com/kris10ansn/go-tic-tac-toe/internal/frontends/web"
+	"github.com/kris10ansn/go-tic-tac-toe/pkg/cli"
+	"github.com/kris10ansn/go-tic-tac-toe/pkg/game"
 )
 
 func main() {

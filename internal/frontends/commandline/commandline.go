@@ -3,8 +3,8 @@ package commandline
 import (
 	"fmt"
 
-	"github.com/kris10ansn/go-tic-tac-toe/src/cli"
-	"github.com/kris10ansn/go-tic-tac-toe/src/game"
+	"github.com/kris10ansn/go-tic-tac-toe/pkg/cli"
+	"github.com/kris10ansn/go-tic-tac-toe/pkg/game"
 )
 
 type CLIFrontEnd struct{}
