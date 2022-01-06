@@ -114,7 +114,7 @@ func NextTurn(turn *Tic) error {
 		}
 	default:
 		{
-			return fmt.Errorf("invalid turn: %s", TicToString(*turn))
+			return fmt.Errorf("invalid turn: %d", *turn)
 		}
 	}
 }
