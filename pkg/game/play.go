@@ -15,7 +15,7 @@ type Game struct {
 
 func (game *Game) Play() {
 	var (
-		board  *Board = CreateEmptyBoard()
+		board  *Board = createEmptyBoard()
 		winner Tic    = EMPTY_TIC
 		turn   Tic    = X_TIC
 		moves  byte   = 0
@@ -26,10 +26,10 @@ func (game *Game) Play() {
 
 		x, y := game.GetPlayer(turn).AwaitMove(board)
 
-		SetBoardCoordinate(board, x, y, turn)
+		setBoardCoordinate(board, x, y, turn)
 
-		winner = CheckWin(board)
-		NextTurn(&turn)
+		winner = checkWin(board)
+		nextTurn(&turn)
 	}
 
 	game.EndGame(board, winner, moves)

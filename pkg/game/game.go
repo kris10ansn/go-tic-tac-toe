@@ -20,7 +20,7 @@ type (
 	Board = [3][3]Tic
 )
 
-func CreateEmptyBoard() *Board {
+func createEmptyBoard() *Board {
 	return &Board{
 		{EMPTY_TIC, EMPTY_TIC, EMPTY_TIC},
 		{EMPTY_TIC, EMPTY_TIC, EMPTY_TIC},
@@ -28,11 +28,11 @@ func CreateEmptyBoard() *Board {
 	}
 }
 
-func SetBoardCoordinate(board *Board, x int, y int, tic Tic) {
+func setBoardCoordinate(board *Board, x int, y int, tic Tic) {
 	board[y][x] = tic
 }
 
-func CheckWin(board *Board) Tic {
+func checkWin(board *Board) Tic {
 	const X_WIN = 3 * X_TIC
 	const O_WIN = 3 * O_TIC
 
@@ -71,7 +71,7 @@ func CheckWin(board *Board) Tic {
 	return EMPTY_TIC
 }
 
-func NextTurn(turn *Tic) error {
+func nextTurn(turn *Tic) error {
 	switch *turn {
 	case X_TIC:
 		{

@@ -20,7 +20,7 @@ type (
 )
 
 func TestBoardToString(t *testing.T) {
-	board := CreateEmptyBoard()
+	board := createEmptyBoard()
 	board_string := BoardToString(board)
 	board_string_expected := "[ ][ ][ ]\n[ ][ ][ ]\n[ ][ ][ ]"
 
@@ -61,7 +61,7 @@ func TestTableNextTurn(t *testing.T) {
 	var tic Tic = prevTic
 	var expected Tic = O_TIC
 
-	err := NextTurn(&tic)
+	err := nextTurn(&tic)
 
 	if tic != expected {
 		t.Errorf(
@@ -76,7 +76,7 @@ func TestTableNextTurn(t *testing.T) {
 		t.Errorf("Test 0 error: %s", err)
 	}
 
-	err = NextTurn(&tic)
+	err = nextTurn(&tic)
 	expected = X_TIC
 
 	if tic != expected {
@@ -93,7 +93,7 @@ func TestTableNextTurn(t *testing.T) {
 	}
 
 	var emptyTic Tic = EMPTY_TIC
-	err = NextTurn(&emptyTic)
+	err = nextTurn(&emptyTic)
 
 	if err == nil {
 		t.Error("Test 2 failed: Should have errored, no error recieved (NextTurn(EMPTY_TIC))")
@@ -140,7 +140,7 @@ func TestTableCheckWin(t *testing.T) {
 	}
 
 	for i, test := range tests {
-		if output := CheckWin(&test.input); output != test.expected {
+		if output := checkWin(&test.input); output != test.expected {
 			t.Errorf(
 				"\nTest %d failed: \n%s inputted, \n%s/%d expected, \n%s/%d recieved",
 				i,
