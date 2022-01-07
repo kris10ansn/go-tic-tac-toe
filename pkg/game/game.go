@@ -20,35 +20,6 @@ type (
 	Board = [3][3]Tic
 )
 
-type FrontEnd interface {
-	PresentBoard(board *Board)
-	AwaitMove(board *Board, turn Tic) (int, int)
-	EndGame(board *Board, winner Tic, moves byte)
-}
-
-func PlayGame(frontEnd FrontEnd) {
-	var (
-		board  *Board = CreateEmptyBoard()
-		winner Tic    = EMPTY_TIC
-		turn   Tic    = X_TIC
-		moves  byte   = 0
-	)
-
-	for ; winner == EMPTY_TIC && moves < 9; moves++ {
-		frontEnd.PresentBoard(board)
-
-		x, y := frontEnd.AwaitMove(board, turn)
-
-		SetBoardCoordinate(board, x, y, turn)
-
-		winner = CheckWin(board)
-		NextTurn(&turn)
-	}
-
-	frontEnd.PresentBoard(board)
-	frontEnd.EndGame(board, winner, moves)
-}
-
 func CreateEmptyBoard() *Board {
 	return &Board{
 		{EMPTY_TIC, EMPTY_TIC, EMPTY_TIC},
