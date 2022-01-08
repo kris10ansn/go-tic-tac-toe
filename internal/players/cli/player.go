@@ -11,6 +11,12 @@ type commandlinePlayer struct {
 	manager *CommandlineManager
 }
 
+func CreateSingleCommandlinePLayer() *commandlinePlayer {
+	return &commandlinePlayer{
+		manager: &CommandlineManager{},
+	}
+}
+
 func (p *commandlinePlayer) AwaitMove(board *game.Board, turn game.Tic) (int, int) {
 	p.manager.printTurn(turn)
 
