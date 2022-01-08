@@ -12,7 +12,7 @@ func main() {
 	mode := getCommandLineArgument(1, "cli")
 
 	if mode == "cli" {
-		cli := &cli.CommandlineInterface{}
+		cli := &cli.CommandlineManager{}
 
 		game := game.CreateGame(
 			cli.CreateCommandlinePlayer(),
@@ -23,7 +23,7 @@ func main() {
 	}
 
 	if mode == "cli-random" {
-		cli := &cli.CommandlineInterface{}
+		cli := &cli.CommandlineManager{}
 
 		game := game.CreateGame(
 			cli.CreateCommandlinePlayer(),

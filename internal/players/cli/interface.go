@@ -6,39 +6,39 @@ import (
 	"github.com/kris10ansn/go-tic-tac-toe/pkg/game"
 )
 
-type CommandlineInterface struct {
+type CommandlineManager struct {
 	boardPresents     int
 	numberOfPlayers   int
 	endMessagePrinted bool
 }
 
-func (cli *CommandlineInterface) CreateCommandlinePlayer() *CommandlinePlayer {
+func (cli *CommandlineManager) CreateCommandlinePlayer() *commandlinePlayer {
 	cli.numberOfPlayers++
 
-	return &CommandlinePlayer{
-		CLI: cli,
+	return &commandlinePlayer{
+		manager: cli,
 	}
 }
 
-func (cli *CommandlineInterface) present(board *game.Board) {
+func (m *CommandlineManager) present(board *game.Board) {
 	// Prevent multiple board prints after each move
-	if cli.boardPresents%cli.numberOfPlayers == 0 {
+	if m.boardPresents%m.numberOfPlayers == 0 {
 		fmt.Println(game.BoardToString(board))
 	}
 
-	cli.boardPresents++
+	m.boardPresents++
 }
 
-func (cli *CommandlineInterface) printTurn(turn game.Tic) {
-	if cli.numberOfPlayers == 1 {
+func (m *CommandlineManager) printTurn(turn game.Tic) {
+	if m.numberOfPlayers == 1 {
 		fmt.Println("Your turn!")
 	} else {
 		fmt.Printf("%s's turn!\n", game.TicToString(turn))
 	}
 }
 
-func (cli *CommandlineInterface) endGame(winner game.Tic, moves byte) {
-	if !cli.endMessagePrinted {
+func (m *CommandlineManager) endGame(winner game.Tic, moves byte) {
+	if !m.endMessagePrinted {
 		if winner == game.EMPTY_TIC {
 			fmt.Println("It's a draw!")
 		} else {
@@ -49,6 +49,6 @@ func (cli *CommandlineInterface) endGame(winner game.Tic, moves byte) {
 			)
 		}
 
-		cli.endMessagePrinted = true
+		m.endMessagePrinted = true
 	}
 }

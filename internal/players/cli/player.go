@@ -6,13 +6,13 @@ import (
 	"github.com/kris10ansn/go-tic-tac-toe/pkg/game"
 )
 
-type CommandlinePlayer struct {
+type commandlinePlayer struct {
 	game.Player
-	CLI *CommandlineInterface
+	manager *CommandlineManager
 }
 
-func (p *CommandlinePlayer) AwaitMove(board *game.Board, turn game.Tic) (int, int) {
-	p.CLI.printTurn(turn)
+func (p *commandlinePlayer) AwaitMove(board *game.Board, turn game.Tic) (int, int) {
+	p.manager.printTurn(turn)
 
 	var x int
 	var y int
@@ -30,9 +30,9 @@ func (p *CommandlinePlayer) AwaitMove(board *game.Board, turn game.Tic) (int, in
 	return x, y
 }
 
-func (p *CommandlinePlayer) Present(board *game.Board) {
-	p.CLI.present(board)
+func (p *commandlinePlayer) Present(board *game.Board) {
+	p.manager.present(board)
 }
-func (p *CommandlinePlayer) EndGame(winner game.Tic, moves byte) {
-	p.CLI.endGame(winner, moves)
+func (p *commandlinePlayer) EndGame(winner game.Tic, moves byte) {
+	p.manager.endGame(winner, moves)
 }
