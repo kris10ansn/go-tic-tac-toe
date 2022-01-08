@@ -111,7 +111,9 @@ func TicToString(tic Tic) string {
 		return "x"
 	case O_TIC:
 		return "o"
-	default:
+	case EMPTY_TIC:
 		return " "
+	default:
+		panic(fmt.Sprintf("Unknown tic %d", tic))
 	}
 }
