@@ -1,23 +1,36 @@
 package main
 
 import (
-	"fmt"
 	"os"
 
-	"github.com/kris10ansn/go-tic-tac-toe/internal/frontends/cli"
-	"github.com/kris10ansn/go-tic-tac-toe/internal/frontends/web"
+	"github.com/kris10ansn/go-tic-tac-toe/internal/players/cli"
+	"github.com/kris10ansn/go-tic-tac-toe/internal/players/random"
 	"github.com/kris10ansn/go-tic-tac-toe/pkg/game"
 )
 
 func main() {
-	switch mode := getCommandLineArgument(1, "cli"); mode {
-	case "cli":
-		game.PlayGame(cli.CLIFrontEnd{})
-	case "web":
-		server := web.CreateServer()
-		server.Run()
-	default:
-		fmt.Printf("Unsupported mode: \"%s\" (arg 1), exiting...\n", mode)
+	mode := getCommandLineArgument(1, "cli")
+
+	if mode == "cli" {
+		cli := &cli.CommandlineInterface{}
+
+		game := game.CreateGame(
+			cli.CreateCommandlinePlayer(),
+			cli.CreateCommandlinePlayer(),
+		)
+
+		game.Play()
+	}
+
+	if mode == "cli-random" {
+		cli := &cli.CommandlineInterface{}
+
+		game := game.CreateGame(
+			cli.CreateCommandlinePlayer(),
+			&random.RandomPlayer{},
+		)
+
+		game.Play()
 	}
 }
 
