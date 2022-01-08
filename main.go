@@ -12,11 +12,11 @@ func main() {
 	mode := getCommandLineArgument(1, "cli")
 
 	if mode == "cli" {
-		cli := &cli.CommandlineManager{}
+		m := &cli.CommandlineManager{}
 
 		game := game.CreateGame(
-			cli.CreateCommandlinePlayer(),
-			cli.CreateCommandlinePlayer(),
+			m.CreateCommandlinePlayer(),
+			m.CreateCommandlinePlayer(),
 		)
 
 		game.Play()
