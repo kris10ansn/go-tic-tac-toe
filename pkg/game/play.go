@@ -3,14 +3,21 @@ package game
 import "fmt"
 
 type Player interface {
-	AwaitMove(board *Board) (int, int)
+	AwaitMove(board *Board, turn Tic) (int, int)
 	Present(board *Board)
-	EndGame(board *Board, winner Tic, moves byte)
+	EndGame(winner Tic, moves byte)
 }
 
 type Game struct {
 	playerX Player
 	playerO Player
+}
+
+func CreateGame(playerX Player, playerO Player) *Game {
+	return &Game{
+		playerX: playerX,
+		playerO: playerO,
+	}
 }
 
 func (game *Game) Play() {
@@ -24,7 +31,7 @@ func (game *Game) Play() {
 	for ; winner == EMPTY_TIC && moves < 9; moves++ {
 		game.Present(board)
 
-		x, y := game.GetPlayer(turn).AwaitMove(board)
+		x, y := game.GetPlayer(turn).AwaitMove(board, turn)
 
 		setBoardCoordinate(board, x, y, turn)
 
@@ -32,7 +39,8 @@ func (game *Game) Play() {
 		nextTurn(&turn)
 	}
 
-	game.EndGame(board, winner, moves)
+	game.Present(board)
+	game.EndGame(winner, moves)
 }
 
 func (game *Game) Present(board *Board) {
@@ -40,9 +48,9 @@ func (game *Game) Present(board *Board) {
 	game.playerO.Present(board)
 }
 
-func (game *Game) EndGame(board *Board, winner Tic, moves byte) {
-	game.playerX.EndGame(board, winner, moves)
-	game.playerO.EndGame(board, winner, moves)
+func (game *Game) EndGame(winner Tic, moves byte) {
+	game.playerX.EndGame(winner, moves)
+	game.playerO.EndGame(winner, moves)
 }
 
 func (game *Game) GetPlayer(tic Tic) Player {
