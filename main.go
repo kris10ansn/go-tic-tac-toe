@@ -23,10 +23,8 @@ func main() {
 	}
 
 	if mode == "cli-random" {
-		cli := &cli.CommandlineManager{}
-
 		game := game.CreateGame(
-			cli.CreateCommandlinePlayer(),
+			cli.CreateSingleCommandlinePLayer(),
 			&random.RandomPlayer{},
 		)
 
