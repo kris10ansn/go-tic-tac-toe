@@ -53,12 +53,32 @@ func (game *Game) EndGame(winner Tic, moves byte) {
 	game.playerO.EndGame(winner, moves)
 }
 
-func (game *Game) GetPlayer(tic Tic) Player {
+func (game *Game) player(tic Tic) *Player {
 	if tic == X_TIC {
-		return game.playerX
+		return &game.playerX
 	} else if tic == O_TIC {
-		return game.playerO
+		return &game.playerO
 	} else {
 		panic(fmt.Sprintf("Unknown tic: %d", tic))
 	}
+}
+
+func (game *Game) GetPlayer(tic Tic) Player {
+	return *game.player(tic)
+}
+
+func (game *Game) SetPlayer(tic Tic, player Player) {
+	*game.player(tic) = player
+}
+
+func (game *Game) AddPlayer(player Player) error {
+	if game.player(X_TIC) == nil {
+		game.SetPlayer(X_TIC, player)
+		return nil
+	} else if *game.player(O_TIC) == nil {
+		game.SetPlayer(O_TIC, player)
+		return nil
+	}
+
+	return fmt.Errorf("Game full")
 }
