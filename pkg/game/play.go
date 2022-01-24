@@ -71,14 +71,14 @@ func (game *Game) SetPlayer(tic Tic, player Player) {
 	*game.player(tic) = player
 }
 
-func (game *Game) AddPlayer(player Player) error {
+func (game *Game) AddPlayer(player Player) (Tic, error) {
 	if *game.player(X_TIC) == nil {
 		game.SetPlayer(X_TIC, player)
-		return nil
+		return X_TIC, nil
 	} else if *game.player(O_TIC) == nil {
 		game.SetPlayer(O_TIC, player)
-		return nil
+		return O_TIC, nil
 	}
 
-	return fmt.Errorf("Game full")
+	return EMPTY_TIC, fmt.Errorf("Game full")
 }
