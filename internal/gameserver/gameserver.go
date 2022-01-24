@@ -65,7 +65,7 @@ func Host() {
 	server := &GameServer{
 		games: make(map[string]*game.Game),
 	}
-	server.games["test"] = &game.Game{}
+	server.games["***REMOVED***"] = &game.Game{}
 
 	r := mux.NewRouter()
 
