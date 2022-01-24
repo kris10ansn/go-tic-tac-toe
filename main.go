@@ -3,6 +3,7 @@ package main
 import (
 	"os"
 
+	"github.com/kris10ansn/go-tic-tac-toe/internal/gameserver"
 	"github.com/kris10ansn/go-tic-tac-toe/internal/players/cli"
 	"github.com/kris10ansn/go-tic-tac-toe/internal/players/random"
 	"github.com/kris10ansn/go-tic-tac-toe/pkg/game"
@@ -29,6 +30,10 @@ func main() {
 		)
 
 		game.Play()
+	}
+
+	if mode == "server" {
+		gameserver.Host()
 	}
 }
 
