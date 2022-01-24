@@ -72,7 +72,7 @@ func (game *Game) SetPlayer(tic Tic, player Player) {
 }
 
 func (game *Game) AddPlayer(player Player) error {
-	if game.player(X_TIC) == nil {
+	if *game.player(X_TIC) == nil {
 		game.SetPlayer(X_TIC, player)
 		return nil
 	} else if *game.player(O_TIC) == nil {
