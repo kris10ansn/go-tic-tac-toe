@@ -1,4 +1,4 @@
-package websocket
+package socket
 
 import (
 	"encoding/json"
@@ -22,11 +22,11 @@ type websocketMoveMessage struct {
 	Move move   `json:"data"`
 }
 
-func (p *websocketPlayer) sendMessage(messageType string, data interface{}) error {
+func (p *WebsocketPlayer) sendMessage(messageType string, data interface{}) error {
 	return p.conn.WriteJSON(websocketMessage{messageType, data})
 }
 
-func (p *websocketPlayer) readMessages() {
+func (p *WebsocketPlayer) readMessages() {
 	for {
 		_, messageString, err := p.conn.ReadMessage()
 
