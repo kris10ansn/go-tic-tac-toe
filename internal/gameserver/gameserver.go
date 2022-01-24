@@ -55,6 +55,12 @@ func (server *GameServer) joinGame(rw http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func (*GameServer) createGame(rw http.ResponseWriter, r *http.Request) {}
+
+func (*GameServer) listGames(rw http.ResponseWriter, r *http.Request) {
+	upgrader.Upgrade(rw, r, nil)
+}
+
 func Host() {
 	server := &GameServer{
 		games: make(map[string]*game.Game),
@@ -63,7 +69,10 @@ func Host() {
 
 	r := mux.NewRouter()
 
+	r.HandleFunc("/ws/games/", server.listGames)
 	r.HandleFunc("/ws/game/{id}", server.joinGame)
+
+	r.HandleFunc("/game/create", server.createGame)
 
 	http.Handle("/", r)
 	log.Fatal(http.ListenAndServe(":8080", nil))
