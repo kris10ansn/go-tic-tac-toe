@@ -11,6 +11,7 @@ type Player interface {
 type Game struct {
 	playerX Player
 	playerO Player
+	Playing bool
 }
 
 func CreateGame(playerX Player, playerO Player) *Game {
@@ -21,6 +22,8 @@ func CreateGame(playerX Player, playerO Player) *Game {
 }
 
 func (game *Game) Play() {
+	game.Playing = true
+
 	var (
 		board  *Board = createEmptyBoard()
 		winner Tic    = EMPTY_TIC
